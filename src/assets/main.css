@@ -62,7 +62,7 @@
   align-items: center;
   text-align: center;
   margin: 4px;
-  border-radius: 50%;
+  border-radius: 8px;
   color: rgb(38, 40, 36);
   transition: 0.35s ease;
 }
@@ -183,4 +183,8 @@
     display: block;
     text-align: center;
   }
+}
+
+.va-modal {
+  z-index: 1001 !important;
 }
