@@ -21,7 +21,7 @@ const sidebar = useSidebarStore()
           <ul class="flex spaced ctr dropdown-wrap">
             <li class="flx">
               <div class="user-icon bg-primary"><span>J</span></div>
-              <VaButtonDropdown preset="primary" class="mr-2 mb-2">
+              <VaButtonDropdown preset="primary" class="mr-2 mb-2" :stickToEdges="true">
                 <template #label>
                   <span class="username">Hi John Doe</span>
                 </template>
