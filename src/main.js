@@ -9,6 +9,7 @@ import 'material-design-icons-iconfont/dist/material-design-icons.min.css'
 // import main after importing all packaged components css
 import './assets/main.css'
 
+import './utils/rules'
 import App from './App.vue'
 import router from './router'
 
