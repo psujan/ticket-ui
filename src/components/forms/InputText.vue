@@ -1,46 +1,35 @@
-<template>
-  <div>
-    <label :for="name">{{ label }}</label>
-    <Field
-      :id="name"
-      :name="name"
-      :type="type"
-      v-bind="field"
-      @input="onInput"
-      class="form-input"
-    />
-    <span v-if="errors.length" class="error-message">{{ errors[0] }}</span>
-  </div>
-</template>
-
-<script>
-import { Field, useField } from 'vee-validate';
-
-export default {
-  components: {
-    Field,
+<script setup>
+import { Field, ErrorMessage } from 'vee-validate'
+import { computed } from 'vue'
+const props = defineProps({
+  label: String,
+  isRequired: {
+    type: Boolean,
+    default: true,
   },
-  props: {
-    name: { type: String, required: true },
-    label: { type: String, default: '' },
-    type: { type: String, default: 'text' },
-    rules: { type: Object, required: true },
+  id: String,
+  name: String,
+  type: {
+    type: String,
+    default: 'text',
   },
-  setup(props) {
-    const { field, errors, handleChange } = useField(props.name, props.rules);
-
-    const onInput = (e) => {
-      handleChange(e); // Trigger validation on input change
-    };
-
-    return { field, errors, onInput };
+  showLabel: {
+    type: Boolean,
+    default: true,
   },
-};
+})
+
+const computedId = computed(() => {
+  return props.id || Math.random().toString(36).substring(2, 7)
+})
 </script>
 
-<style scoped>
-.error-message {
-  color: red;
-  font-size: 0.8em;
-}
-</style>
+<template>
+  <div class="form-field">
+    <label :for="computedId" class="field-label" v-if="showLabel"
+      >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
+    >
+    <Field :name="name" :type="type" :id="computedId" class="field-input" />
+    <ErrorMessage :name="name" class="field-error" />
+  </div>
+</template>

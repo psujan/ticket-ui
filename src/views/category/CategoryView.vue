@@ -3,6 +3,8 @@ import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import CategoryList from './partials/CategoryList.vue'
 import CategoryModal from './partials/CategoryModal.vue'
 import { Form, Field, ErrorMessage } from 'vee-validate'
+import * as yup from 'yup'
+import InputText from '@/components/forms/InputText.vue'
 
 const model = defineModel({ default: false })
 
@@ -17,14 +19,21 @@ const handleModalClose = () => {
 }
 
 const formValues = {
-  email: 'test',
-  password: 'test',
+  email: '',
+  password: '',
 }
 
 const handleSubmit = (v) => {
   console.log(v)
   console.log('submitting')
 }
+
+const schema = yup.object({
+  address: yup.string().required('Address is required'),
+  email: yup.string().email().required('Email khai ta rakheko'),
+  //name: yup.string().required(),
+  password: yup.string().required('Password is required').min(8, 'Password must be 8 char long'),
+})
 </script>
 
 <template>
@@ -37,11 +46,25 @@ const handleSubmit = (v) => {
         </div>
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
-        <Form v-slot="{ validate }" :initial-values="formValues" @submit="handleSubmit">
-          <label for="email">Email</label>
-          <Field name="email" type="email" id="email" rules="required|email" />
-          <ErrorMessage name="email" />
-          <Field name="password" type="password" rules="required|min:8" />
+        <Form
+          v-slot="{ validate }"
+          :initial-values="formValues"
+          @submit="handleSubmit"
+          :validation-schema="schema"
+        >
+          <div class="row form-row">
+            <div class="flex flex-col md6">
+              <InputText name="address" label="Address" />
+            </div>
+
+            <div class="flex flex-col md6">
+              <div class="form-field">
+                <InputText name="email" label="Email" />
+              </div>
+            </div>
+          </div>
+
+          <Field name="password" type="password" />
           <ErrorMessage name="password" />
           <button type="submit" @click="validate">Submit</button>
         </Form>
