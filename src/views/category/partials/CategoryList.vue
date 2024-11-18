@@ -27,7 +27,9 @@ const pageNo = 5
           <td>
             <div class="action-items">
               <a href="#" title="Edit Item"><i class="ri-edit-box-line"></i></a>
-              <a href="#" title="Delete Item"><i class="ri-delete-bin-line"></i></a>
+              <a href="#" title="Delete Item" @click="$emit('deleteItem')"
+                ><i class="ri-delete-bin-line"></i
+              ></a>
             </div>
           </td>
         </tr>

@@ -6,12 +6,27 @@ import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import InputText from '@/components/forms/InputText.vue'
 
+import { useModal } from 'vuestic-ui'
 const model = defineModel({ default: false })
-
+const { confirm } = useModal()
 const openModal = (action) => {
   if (action == 'create') {
     model.value = true
   }
+}
+
+const deleteItem = () => {
+  confirm({
+    message: 'Are you sure you want to delete this item?',
+    size: 'small',
+    maxWidth: '380px',
+  }).then((ok) => {
+    if (!ok) {
+      return
+    }
+
+    console.log('delete api')
+  })
 }
 
 const handleModalClose = () => {
@@ -68,7 +83,7 @@ const schema = yup.object({
           <ErrorMessage name="password" />
           <button type="submit" @click="validate">Submit</button>
         </Form>
-        <CategoryList />
+        <CategoryList @deleteItem="deleteItem" />
       </div>
     </div>
     <CategoryModal v-model="model" @closeModal="handleModalClose" />

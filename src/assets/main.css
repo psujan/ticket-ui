@@ -214,9 +214,13 @@
   color: #fd1111;
 }
 
-.form-row .flex{
-  padding:12px;
+.form-row .flex {
+  padding: 12px;
 }
 .va-modal {
   z-index: 1001 !important;
+}
+
+.va-modal__footer button {
+  min-width: 100px !important;
 }
