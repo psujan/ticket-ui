@@ -224,3 +224,15 @@
 .va-modal__footer button {
   min-width: 100px !important;
 }
+
+.form-action-button {
+  justify-content: flex-end !important;
+}
+
+.form-action-button button {
+  min-width: 100px;
+}
+
+.form-action-button .cancel-btn {
+  margin-right: 12px;
+}

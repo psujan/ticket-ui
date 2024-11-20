@@ -2,10 +2,6 @@
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import CategoryList from './partials/CategoryList.vue'
 import CategoryModal from './partials/CategoryModal.vue'
-import { Form, Field, ErrorMessage } from 'vee-validate'
-import * as yup from 'yup'
-import InputText from '@/components/forms/InputText.vue'
-
 import { useModal } from 'vuestic-ui'
 const model = defineModel({ default: false })
 const { confirm } = useModal()
@@ -20,13 +16,7 @@ const deleteItem = () => {
     message: 'Are you sure you want to delete this item?',
     size: 'small',
     maxWidth: '380px',
-  }).then((ok) => {
-    if (!ok) {
-      return
-    }
-
-    console.log('delete api')
-  })
+  }).then((ok) => console.log(ok))
 }
 
 const handleModalClose = () => {
@@ -42,13 +32,6 @@ const handleSubmit = (v) => {
   console.log(v)
   console.log('submitting')
 }
-
-const schema = yup.object({
-  address: yup.string().required('Address is required'),
-  email: yup.string().email().required('Email khai ta rakheko'),
-  //name: yup.string().required(),
-  password: yup.string().required('Password is required').min(8, 'Password must be 8 char long'),
-})
 </script>
 
 <template>
@@ -61,28 +44,6 @@ const schema = yup.object({
         </div>
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
-        <Form
-          v-slot="{ validate }"
-          :initial-values="formValues"
-          @submit="handleSubmit"
-          :validation-schema="schema"
-        >
-          <div class="row form-row">
-            <div class="flex flex-col md6">
-              <InputText name="address" label="Address" />
-            </div>
-
-            <div class="flex flex-col md6">
-              <div class="form-field">
-                <InputText name="email" label="Email" />
-              </div>
-            </div>
-          </div>
-
-          <Field name="password" type="password" />
-          <ErrorMessage name="password" />
-          <button type="submit" @click="validate">Submit</button>
-        </Form>
         <CategoryList @deleteItem="deleteItem" />
       </div>
     </div>

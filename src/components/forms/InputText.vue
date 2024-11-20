@@ -22,6 +22,8 @@ const props = defineProps({
 const computedId = computed(() => {
   return props.id || Math.random().toString(36).substring(2, 7)
 })
+
+const model = defineModel()
 </script>
 
 <template>
@@ -29,7 +31,7 @@ const computedId = computed(() => {
     <label :for="computedId" class="field-label" v-if="showLabel"
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
-    <Field :name="name" :type="type" :id="computedId" class="field-input" />
+    <Field :name="name" :type="type" :id="computedId" class="field-input" v-model="model" />
     <ErrorMessage :name="name" class="field-error" />
   </div>
 </template>
