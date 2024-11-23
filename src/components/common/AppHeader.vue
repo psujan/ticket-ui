@@ -1,6 +1,8 @@
 <script setup>
 import { useSidebarStore } from '@/stores/useSidebarStore'
+import useAuthService from '@/composables/Auth/useAuthService'
 const sidebar = useSidebarStore()
+const { logout } = useAuthService()
 </script>
 
 <template>
@@ -28,7 +30,7 @@ const sidebar = useSidebarStore()
                 <VaMenuList>
                   <VaMenuItem class="list-item"><i class="ri-user-line"></i>Profile</VaMenuItem>
                   <VaDivider class="list-item" />
-                  <VaMenuItem class="list-item"
+                  <VaMenuItem class="list-item" @click="() => logout()"
                     ><i class="ri-logout-circle-r-line"></i>Logout</VaMenuItem
                   >
                 </VaMenuList>

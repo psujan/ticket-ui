@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-    return { isAuthenticated: false, user: null }
+    return { isAuthenticated: false, user: null, role: undefined, token: undefined }
   },
 
   getters: {
@@ -11,10 +11,25 @@ export const useAuthStore = defineStore('auth', {
   },
 
   actions: {
-    toggleSidebar() {
-      this.isMinimized = !this.isMinimized
+    setAuthToken(token) {
+      this.token = token
     },
 
-    login() {},
+    setUser(user) {
+      this.user = user
+      this.isAuthenticated = true
+    },
+
+    setRoles(roles) {
+      this.role = roles
+    },
+
+    clearAuthCredentials() {
+      this.user = null
+      this.token = undefined
+      this.role = undefined
+      this.isAuthenticated = false
+    },
   },
+  persist: true,
 })

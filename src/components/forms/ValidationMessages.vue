@@ -17,7 +17,7 @@ defineProps({
       <span><i class="ri-error-warning-fill"></i>{{ title }}</span>
     </h6>
 
-    <ul class="message-wrap">
+    <ul class="message-wrap" v-if="messages.length > 0 && !messages.includes('')">
       <li v-for="(msg, i) in messages" :key="i">{{ msg }}</li>
     </ul>
   </div>
@@ -43,6 +43,6 @@ defineProps({
 .message-wrap li {
   margin: 6px 0;
   font-size: 13px;
-  list-style:;
+  list-style: none;
 }
 </style>
