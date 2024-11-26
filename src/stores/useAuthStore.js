@@ -3,7 +3,13 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-    return { isAuthenticated: false, user: null, role: undefined, token: undefined }
+    return {
+      isAuthenticated: false,
+      user: null,
+      role: undefined,
+      token: undefined,
+      tokenAddedAt: undefined,
+    }
   },
 
   getters: {
@@ -24,10 +30,15 @@ export const useAuthStore = defineStore('auth', {
       this.role = roles
     },
 
+    setTokenAddedAt(date) {
+      this.tokenAddedAt = date
+    },
+
     clearAuthCredentials() {
       this.user = null
       this.token = undefined
       this.role = undefined
+      this.tokenValidUpto = undefined
       this.isAuthenticated = false
     },
   },

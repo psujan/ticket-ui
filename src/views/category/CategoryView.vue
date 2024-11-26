@@ -3,6 +3,11 @@ import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import CategoryList from './partials/CategoryList.vue'
 import CategoryModal from './partials/CategoryModal.vue'
 import { useModal } from 'vuestic-ui'
+import useCategory from '@/composables/useCategory'
+import { reactive } from 'vue'
+
+const { rows, addRecord, getRecords } = useCategory()
+
 const model = defineModel({ default: false })
 const { confirm } = useModal()
 const openModal = (action) => {
@@ -19,18 +24,20 @@ const deleteItem = () => {
   }).then((ok) => console.log(ok))
 }
 
-const handleModalClose = () => {
+const handleModalClose = ({ reload }) => {
   model.value = false
+  if (reload) {
+    getRecords()
+  }
 }
 
-const formValues = {
-  email: '',
-  password: '',
-}
+const formValues = reactive({
+  title: undefined,
+  status: undefined,
+})
 
-const handleSubmit = (v) => {
-  console.log(v)
-  console.log('submitting')
+const handleSubmit = () => {
+  addRecord(formValues)
 }
 </script>
 
@@ -44,9 +51,14 @@ const handleSubmit = (v) => {
         </div>
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
-        <CategoryList @deleteItem="deleteItem" />
+        <CategoryList @deleteItem="deleteItem" :rows="rows" />
       </div>
     </div>
-    <CategoryModal v-model="model" @closeModal="handleModalClose" />
+    <CategoryModal
+      v-model="model"
+      :form-values="formValues"
+      @onModalClose="handleModalClose"
+      @onFormSubmit="handleSubmit"
+    />
   </DashboardLayout>
 </template>

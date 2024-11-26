@@ -15,7 +15,6 @@ export default function useAuthService() {
   })
 
   const logout = () => {
-    console.log('here')
     authStore.clearAuthCredentials()
     router.push({ name: 'login' })
   }
@@ -33,12 +32,12 @@ export default function useAuthService() {
     resetValidationError()
     showError.value = false
     const result = await AuthService.Login(formValues)
-    console.log(result)
     if (result.isSucc) {
       const { roles, token, user } = result.res.data.data
       authStore.setAuthToken(token)
       authStore.setUser(user)
       authStore.setRoles(roles)
+      authStore.setTokenAddedAt(Date())
       setAuthToken()
       router.push({ name: 'dashboard' })
       console.log('here finallly')
@@ -56,7 +55,6 @@ export default function useAuthService() {
       // this is validation error
       showError.value = true
       errorTitle.value = 'One or more validation errors occured'
-      console.log('here', err.response.data.errors)
       const failedValidations = err.response.data.errors
       validationMessages.value.push(failedValidations.UserName[0])
       validationMessages.value.push(failedValidations.Password[0])

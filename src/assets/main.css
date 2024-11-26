@@ -10,6 +10,12 @@
   background-color: #fff !important;
 }
 
+.form-title{
+  padding-left: 12px;
+  margin-bottom: 16px;
+  text-align: start;
+}
+
 .sidebar-toggle {
   /* position: fixed;
   top: 14px;
@@ -110,6 +116,7 @@
   background: #dedede;
   padding: 12px 0;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .fl-table tr:nth-child(even) {
@@ -235,4 +242,12 @@
 
 .form-action-button .cancel-btn {
   margin-right: 12px;
+}
+
+.is-active {
+  color: #3d9209;
+}
+
+.is-inactive {
+  color: #fd1111;
 }

@@ -8,7 +8,7 @@ import 'vue-loading-overlay/dist/css/index.css'
 import 'vuestic-ui/css'
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.min.css'
-
+import { setAuthToken } from './utils/apiClient'
 // import main after importing all packaged components css
 import './assets/main.css'
 
@@ -24,4 +24,6 @@ app.use(router)
 app.use(pinia)
 app.use(createVuestic())
 app.use(VueSidebarMenu)
+
+setAuthToken()
 app.mount('#app')

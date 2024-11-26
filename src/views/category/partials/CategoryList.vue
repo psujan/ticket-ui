@@ -1,4 +1,9 @@
 <script setup>
+defineProps({
+  rows: {
+    default: null,
+  },
+})
 const pageNo = 5
 
 //const openModal = ref(false);
@@ -6,24 +11,29 @@ const pageNo = 5
 
 <template>
   <div class="table-wrapper">
-    <table class="fl-table">
+    <table class="fl-table" v-if="rows">
       <thead>
         <tr>
-          <th>Header 1</th>
-          <th>Header 2</th>
-          <th>Header 3</th>
-          <th>Header 4</th>
-          <th>Header 5</th>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Timestamp</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Content 1</td>
-          <td>Content 1</td>
-          <td>Content 1</td>
-          <td>Content 1</td>
-          <td>Content 1</td>
+        <tr v-for="(row, i) in rows.data" :key="i">
+          <td>{{ row.id }}</td>
+          <td>{{ row.title }}</td>
+          <td>
+            <p :class="row.status ? 'is-active' : 'in-inactive'">
+              {{ row.status ? 'Active' : 'Inactive' }}
+            </p>
+          </td>
+          <td>
+            <p>Created At : {{ row.createdAt }}</p>
+            <p>Updated At : {{ row.updatedAt }}</p>
+          </td>
           <td>
             <div class="action-items">
               <a href="#" title="Edit Item"><i class="ri-edit-box-line"></i></a>
@@ -32,78 +42,6 @@ const pageNo = 5
               ></a>
             </div>
           </td>
-        </tr>
-        <tr>
-          <td>Content 2</td>
-          <td>Content 2</td>
-          <td>Content 2</td>
-          <td>Content 2</td>
-          <td>Content 2</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 3</td>
-          <td>Content 3</td>
-          <td>Content 3</td>
-          <td>Content 3</td>
-          <td>Content 3</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 4</td>
-          <td>Content 4</td>
-          <td>Content 4</td>
-          <td>Content 4</td>
-          <td>Content 4</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 5</td>
-          <td>Content 5</td>
-          <td>Content 5</td>
-          <td>Content 5</td>
-          <td>Content 5</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 6</td>
-          <td>Content 6</td>
-          <td>Content 6</td>
-          <td>Content 6</td>
-          <td>Content 6</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 7</td>
-          <td>Content 7</td>
-          <td>Content 7</td>
-          <td>Content 7</td>
-          <td>Content 7</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 8</td>
-          <td>Content 8</td>
-          <td>Content 8</td>
-          <td>Content 8</td>
-          <td>Content 8</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 9</td>
-          <td>Content 9</td>
-          <td>Content 9</td>
-          <td>Content 9</td>
-          <td>Content 9</td>
-          <td>Content 1</td>
-        </tr>
-        <tr>
-          <td>Content 10</td>
-          <td>Content 10</td>
-          <td>Content 10</td>
-          <td>Content 10</td>
-          <td>Content 10</td>
-          <td>Content 1</td>
         </tr>
       </tbody>
 
