@@ -10,8 +10,7 @@ import InputSelect from '@/components/forms/InputSelect.vue'
 import useCategory from '@/composables/useCategory'
 import eventBus, { EVENT } from '@/utils/mitt'
 
-const { showError, errorTitle, validationMessages, addRecord} =
-  useCategory()
+const { showError, errorTitle, validationMessages, addRecord } = useCategory()
 //props
 const props = defineProps({
   formValues: {
@@ -23,7 +22,7 @@ const emit = defineEmits(['onModalClose'])
 
 eventBus.on(EVENT.ADD, (data) => {
   toast(data.message)
-  emit('onModalClose' , ({reload : true}))
+  emit('onModalClose', true)
 })
 
 /*const schema = yup.object({
@@ -38,7 +37,6 @@ const handleSubmit = () => {
   status = status == 1 ? true : false
   addRecord({ title, status })
 }
-
 </script>
 
 <template>
@@ -63,7 +61,7 @@ const handleSubmit = () => {
           </div>
         </VaCardContent>
         <VaCardActions class="form-action-button">
-          <VaButton preset="primary" @click="$emit('closeModal')" class="cancel-btn">
+          <VaButton preset="primary" @click="$emit('onModalClose')" class="cancel-btn">
             Cancel
           </VaButton>
           <VaButton type="submit"> Submit </VaButton>

@@ -50,6 +50,29 @@ const CategoryService = {
         loader.hide()
       })
   },
+  deleteCategory : async (id)=>{
+    const loader = $loading.show()
+    const url = Endpoints.DELETE_CATEGORY.replace("{id}" , id)
+    return apiClient
+      .delete(url)
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  }
 }
 
 export default CategoryService

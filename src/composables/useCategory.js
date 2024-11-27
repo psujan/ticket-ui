@@ -1,6 +1,6 @@
 import CategoryService from '@/services/CategoryService'
 import { onMounted, ref } from 'vue'
-import eventBus, { EVENT } from '@/utils/mitt'
+import eventBus, { EVENT, EVENT_STATUS } from '@/utils/mitt'
 
 export default function useCategory() {
   const rows = ref([])
@@ -27,15 +27,24 @@ export default function useCategory() {
     resetError()
     const result = await CategoryService.addCategory(formValue)
     if (result.isSucc) {
-      /*toast(result.res.data.message)
-      actionStatus.value = true
-      actionMessage.value = result.res.data.message
-      return*/
       eventBus.emit(EVENT.ADD, { message: result.res.data.message })
+      return
     }
 
     if (result.err != null) {
       handleError(result.err)
+    }
+  }
+
+  const deleteRecord = async (id) => {
+    const result = await CategoryService.deleteCategory(id)
+    if (result.isSucc) {
+      eventBus.emit(EVENT.DELETE, { message: result.res.data.message, type: EVENT_STATUS.SUCCESS })
+    }
+
+    if (result.err != null) {
+      console.error(result.err)
+      eventBus.emit(EVENT.DELETE, { message: 'Something Went Wrong', type: EVENT_STATUS.ERROR })
     }
   }
 
@@ -75,5 +84,6 @@ export default function useCategory() {
     rows,
     addRecord,
     getRecords,
+    deleteRecord,
   }
 }

@@ -8,6 +8,6 @@ const colorMap = {
 
 const { init } = useToast()
 
-export default function toast(msg = 'Successful', type = 'success') {
-  init({ message: msg, color: colorMap[type] })
+export default function toast(msg = 'Successful', type = 'success', duration = 2500) {
+  init({ message: msg, color: colorMap[type], duration: duration })
 }

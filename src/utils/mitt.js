@@ -1,14 +1,19 @@
 // eventBus.js
-import mitt from 'mitt';
+import mitt from 'mitt'
 
-const eventBus = mitt();
+const eventBus = mitt()
 
 const EVENT = {
-  ADD :'add',
-  UPDATE :'update',
-  DELETE : 'delete'
+  ADD: 'add',
+  UPDATE: 'update',
+  DELETE: 'delete',
 }
 
-export default eventBus;
+const EVENT_STATUS = {
+  SUCCESS: 'success',
+  ERROR: 'error',
+}
 
-export {EVENT}
+export default eventBus
+
+export { EVENT, EVENT_STATUS }
