@@ -4,8 +4,10 @@ const confirmOptions = {
   maxWidth: '380px',
 }
 
-
-
-export {
-  confirmOptions
+const actions = {
+  add: 'Add',
+  edit: 'Edit',
+  delete: 'Delete',
 }
+
+export { confirmOptions, actions }

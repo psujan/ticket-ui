@@ -50,9 +50,32 @@ const CategoryService = {
         loader.hide()
       })
   },
-  deleteCategory : async (id)=>{
+  editCategory: async (id, formValues) => {
     const loader = $loading.show()
-    const url = Endpoints.DELETE_CATEGORY.replace("{id}" , id)
+    const url = Endpoints.EDIT_CATEGORY.replace('{id}', id)
+    return apiClient
+      .put(url, formValues)
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  },
+  deleteCategory: async (id) => {
+    const loader = $loading.show()
+    const url = Endpoints.DELETE_CATEGORY.replace('{id}', id)
     return apiClient
       .delete(url)
       .then((res) => {
@@ -72,7 +95,7 @@ const CategoryService = {
       .finally(() => {
         loader.hide()
       })
-  }
+  },
 }
 
 export default CategoryService

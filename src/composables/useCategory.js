@@ -18,6 +18,7 @@ export default function useCategory() {
   }
 
   const resetError = () => {
+    console.log('calling reset')
     showError.value = false
     errorTitle.value = undefined
     validationMessages.value = []
@@ -48,6 +49,18 @@ export default function useCategory() {
     }
   }
 
+  const editRecord = async (id, formValue) => {
+    const result = await CategoryService.editCategory(id, formValue)
+    if (result.isSucc) {
+      eventBus.emit(EVENT.UPDATE, { message: result.res.data.message })
+      return
+    }
+
+    if (result.err != null) {
+      handleError(result.err)
+    }
+  }
+
   const handleError = (err) => {
     console.log(err)
 
@@ -69,7 +82,7 @@ export default function useCategory() {
       errorTitle.value = err.response.data.title
       const failedValidations = err.response.data.errors
       validationMessages.value.push(failedValidations.Title[0])
-      validationMessages.value.push(failedValidations.Status[0])
+      //validationMessages.value.push(failedValidations.Status[0])
     }
   }
 
@@ -82,6 +95,8 @@ export default function useCategory() {
     errorTitle,
     validationMessages,
     rows,
+    resetError,
+    editRecord,
     addRecord,
     getRecords,
     deleteRecord,

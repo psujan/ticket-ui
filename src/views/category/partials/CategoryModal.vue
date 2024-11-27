@@ -9,12 +9,18 @@ import { Form } from 'vee-validate'
 import InputSelect from '@/components/forms/InputSelect.vue'
 import useCategory from '@/composables/useCategory'
 import eventBus, { EVENT } from '@/utils/mitt'
-
-const { showError, errorTitle, validationMessages, addRecord } = useCategory()
+const { showError, errorTitle, validationMessages, addRecord, resetError, editRecord } =
+  useCategory()
 //props
 const props = defineProps({
   formValues: {
     default: () => {},
+  },
+  row: {
+    default: null,
+  },
+  showModal: {
+    default: false,
   },
 })
 
@@ -25,27 +31,44 @@ eventBus.on(EVENT.ADD, (data) => {
   emit('onModalClose', true)
 })
 
+eventBus.on(EVENT.UPDATE, (data) => {
+  toast(data.message)
+  emit('onModalClose', true)
+})
+
 /*const schema = yup.object({
-  address: yup.string().required('Address is required'),
-  email: yup.string().email().required('Email khai ta rakheko'),
-  //name: yup.string().required(),
-  password: yup.string().required('Password is required').min(8, 'Password must be 8 char long'),
+  title: yup.string().required('Title is required'),
+  status: yup.string().required('Status is required'),
 })*/
 
 const handleSubmit = () => {
   let { title, status } = props.formValues
   status = status == 1 ? true : false
-  addRecord({ title, status })
+  if (props.row == null) {
+    addRecord({ title, status })
+  } else {
+    editRecord(props.row.id, { title, status })
+  }
 }
+
+//watchers
+//watchers
+watch(
+  () => props.showModal,
+  (_, oldV) => {
+    if (!oldV) {
+      resetError()
+    }
+  },
+)
 </script>
 
 <template>
-  <VaModal no-padding no-outside-dismiss>
-    <template #content="{ ok }">
-      <!-- <VaImage :ratio="16 / 9" src="https://picsum.photos/1500" /> -->
+  <VaModal no-padding no-outside-dismiss hide-default-actions>
+    <div>
       <Form :initial-values="formValues" @submit="handleSubmit" ref="categoryForm">
         <VaCardContent>
-          <h2 class="title form-title">Add Category</h2>
+          <h2 class="title form-title">{{ row != null ? 'Edit' : 'Add' }} Category</h2>
           <ValidationMessages v-if="showError" :messages="validationMessages" :title="errorTitle" />
 
           <div class="row form-row">
@@ -67,6 +90,7 @@ const handleSubmit = () => {
           <VaButton type="submit"> Submit </VaButton>
         </VaCardActions>
       </Form>
-    </template>
+    </div>
+    <!-- <VaImage :ratio="16 / 9" src="https://picsum.photos/1500" /> -->
   </VaModal>
 </template>

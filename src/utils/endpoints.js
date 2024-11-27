@@ -6,5 +6,6 @@ export default {
   //Category Routes
   FETCH_CATEGORY: API_URL + '/category/paginated',
   ADD_CATEGORY: API_URL + '/category',
-  DELETE_CATEGORY : API_URL + '/category/{id}'
+  DELETE_CATEGORY: API_URL + '/category/{id}',
+  EDIT_CATEGORY: API_URL + '/category/{id}',
 }
