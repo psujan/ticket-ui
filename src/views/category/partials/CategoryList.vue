@@ -1,10 +1,12 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+const props = defineProps({
   rows: {
     default: null,
   },
 })
 const pageNo = 5
+
 
 //const openModal = ref(false);
 </script>
@@ -46,18 +48,6 @@ const pageNo = 5
           </td>
         </tr>
       </tbody>
-
-      <tbody></tbody>
     </table>
-  </div>
-  <div class="pagination cd">
-    <VaPagination
-      class="pagination-content"
-      v-model="pageNo"
-      :pages="10"
-      :visible-pages="3"
-      buttons-preset="primary"
-      gapped
-    />
   </div>
 </template>

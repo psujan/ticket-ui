@@ -4,10 +4,11 @@ import CategoryList from './partials/CategoryList.vue'
 import CategoryModal from './partials/CategoryModal.vue'
 import { useModal } from 'vuestic-ui'
 import useCategory from '@/composables/useCategory'
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { actions, confirmOptions } from '@/utils/data'
 import eventBus, { EVENT, EVENT_STATUS } from '@/utils/mitt'
 import toast from '@/utils/toast'
+import AppPagination from '@/components/common/AppPagination.vue'
 
 // composable functions
 const { confirm } = useModal()
@@ -74,11 +75,15 @@ const handleDelete = (id) => {
 
 const handleEdit = (editRow) => {
   row.value = editRow
-  console.log(row.value)
   formValues.title = editRow.title
   formValues.status = editRow.status ? 1 : 0
   openModal(actions.edit)
 }
+
+//watcher
+watch(rows, (data) => {
+  console.log('rows changed', rows.value)
+})
 </script>
 
 <template>
@@ -92,6 +97,7 @@ const handleEdit = (editRow) => {
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
         <CategoryList :rows="rows" @onEdit="handleEdit" @onDelete="handleDelete" />
+        <AppPagination :rows="rows" @onPageChange="(pageNo) => getRecords(pageNo)" />
       </div>
     </div>
     <CategoryModal

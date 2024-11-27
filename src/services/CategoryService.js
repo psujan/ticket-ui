@@ -6,7 +6,7 @@ import $loading from '@/utils/loading'
 const CategoryService = {
   getPaginated: async (pageNo) => {
     const loader = $loading.show()
-    const url = Endpoints.FETCH_CATEGORY + `?pageNo=${pageNo}`
+    const url = Endpoints.FETCH_CATEGORY + `?pageNumber=${pageNo}`
     return apiClient
       .get(url)
       .then((res) => {
