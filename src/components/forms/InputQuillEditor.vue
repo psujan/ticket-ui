@@ -1,5 +1,7 @@
 <script setup>
-import { Field, ErrorMessage } from 'vee-validate'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import { ErrorMessage } from 'vee-validate'
 import { computed } from 'vue'
 const props = defineProps({
   label: String,
@@ -38,14 +40,7 @@ const model = defineModel()
     <label :for="computedId" class="field-label" v-if="showLabel"
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
-    <Field
-      :name="name"
-      :type="type"
-      :id="computedId"
-      class="field-input"
-      :placeholder="computedPlaceHolder"
-      v-model="model"
-    />
+    <QuillEditor theme="snow" v-model:content="model" :placeholder="computedPlaceHolder" />
     <ErrorMessage :name="name" class="field-error" />
   </div>
 </template>

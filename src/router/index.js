@@ -4,6 +4,8 @@ import CategoryView from '../views/category/CategoryView.vue'
 import LoginView from '@/views/auth/LoginView.vue'
 import { useAuthStore } from '@/stores/useAuthStore'
 import { storeToRefs } from 'pinia'
+import TicketView from '@/views/ticket/TicketView.vue'
+import TicketAdd from '@/views/ticket/TicketAdd.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +24,16 @@ const router = createRouter({
       path: '/categories',
       name: 'category',
       component: CategoryView,
+    },
+    {
+      path: '/ticket',
+      name: 'ticket',
+      component: TicketView,
+    },
+    {
+      path: '/ticket/new',
+      name: 'ticket-add',
+      component: TicketAdd,
     },
     // {
     //   path: '/about',

@@ -1,10 +1,11 @@
 <script setup>
-import { timeAgo } from '@/utils/functions'
+import { timeAgo } from '@/utils/functions';
 defineProps({
   rows: {
     default: null,
   },
 })
+
 </script>
 
 <template>
@@ -24,7 +25,7 @@ defineProps({
           <td>{{ row.id }}</td>
           <td>{{ row.title }}</td>
           <td>
-            <p :class="row.status ? 'is-active' : 'is-inactive'">
+            <p :class="row.status ? 'is-active' : 'in-inactive'">
               {{ row.status ? 'Active' : 'Inactive' }}
             </p>
           </td>

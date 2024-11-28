@@ -38,14 +38,7 @@ const model = defineModel()
     <label :for="computedId" class="field-label" v-if="showLabel"
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
-    <Field
-      :name="name"
-      :type="type"
-      :id="computedId"
-      class="field-input"
-      :placeholder="computedPlaceHolder"
-      v-model="model"
-    />
+    <VaFileUpload v-model="model" dropzone upload-button-text="Upload File" />
     <ErrorMessage :name="name" class="field-error" />
   </div>
 </template>

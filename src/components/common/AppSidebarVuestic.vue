@@ -29,7 +29,7 @@ const handleClick = (routeName) => {
         </VaSidebarItemContent>
       </VaSidebarItem>
 
-      <VaSidebarItem>
+      <VaSidebarItem @click="handleClick('ticket')">
         <VaSidebarItemContent>
           <VaIcon>
             <i class="ri-share-forward-box-line"></i>

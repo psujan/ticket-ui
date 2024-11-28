@@ -8,4 +8,7 @@ export default {
   ADD_CATEGORY: API_URL + '/category',
   DELETE_CATEGORY: API_URL + '/category/{id}',
   EDIT_CATEGORY: API_URL + '/category/{id}',
+
+  //Ticket Routes
+  FETCH_TICKET: API_URL + '/ticket/paginated',
 }

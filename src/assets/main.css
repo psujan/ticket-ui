@@ -259,3 +259,11 @@
 .is-inactive {
   color: #fd1111;
 }
+
+.ql-editor {
+  min-height: 250px;
+}
+
+.ql-editor p {
+  font-size: 15px;
+}
