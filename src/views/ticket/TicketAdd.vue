@@ -2,7 +2,7 @@
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import ValidationMessages from '@/components/forms/ValidationMessages.vue'
 import useTicket from '@/composables/useTicket'
-import { onMounted, reactive, computed, ref } from 'vue'
+import { onMounted, reactive, computed, ref, watch } from 'vue'
 import InputSelect from '@/components/forms/InputSelect.vue'
 import InputText from '@/components/forms/InputText.vue'
 import { Form } from 'vee-validate'
@@ -11,20 +11,26 @@ import InputFile from '@/components/forms/InputFile.vue'
 import eventBus, { EVENT } from '@/utils/mitt'
 import toast from '@/utils/toast'
 import router from '@/router'
+import { useRoute } from 'vue-router'
 
 //composable call
-const { showError, errorTitle, validationMessages, list, addRecord, getList } = useTicket()
+const route = useRoute()
+const {
+  showError,
+  errorTitle,
+  validationMessages,
+  list,
+  row,
+  addRecord,
+  editRecord,
+  getList,
+  getTicketById,
+} = useTicket()
 
-//props
-defineProps({
-  row: {
-    default: null,
-  },
-})
 //reactive & computed data
 const validationErrorRef = ref(null)
 
-const formValues = reactive({
+const form = reactive({
   title: '',
   status: '',
   issuerEmail: '',
@@ -54,13 +60,30 @@ const computedList = computed(() => {
 })
 
 //methods
+const routeTo = (routeName) => {
+  router.push({ name: routeName })
+}
 const handleSubmit = () => {
-  console.log('here submitting', formValues)
-  addRecord(formValues)
+  if (row.value != null) {
+    editRecord(row.value.id, form)
+  } else {
+    addRecord(form)
+  }
 }
 
 const scrollTo = (view) => {
   view.value?.scrollIntoView({ behavior: 'smooth' })
+}
+
+const setFormValue = () => {
+  console.log(row.value)
+  form.title = row.value.title
+  form.categoryId = row.value.categoryId
+  form.status = row.value.status
+  form.details = row.value.details
+  form.issuerPhone = row.value.issuerPhone
+  form.issuerEmail = row.value.issuerEmail == null ? '' : row.value.issuerEmail
+  form.files = []
 }
 
 //manage event
@@ -69,8 +92,12 @@ eventBus.on(EVENT.ADD, (data) => {
   router.push({ name: 'ticket' })
 })
 
+eventBus.on(EVENT.UPDATE, (data) => {
+  toast(data.message)
+  router.push({ name: 'ticket' })
+})
+
 eventBus.on(EVENT.VALIDATION_ERROR, () => {
-  console.log('event fired')
   scrollTo(validationErrorRef)
 })
 
@@ -78,20 +105,45 @@ eventBus.on(EVENT.VALIDATION_ERROR, () => {
 onMounted(() => {
   getList()
 })
+
+//watcher
+watch(
+  () => route,
+  (to) => {
+    if (to.params.id) {
+      getTicketById(to.params.id)
+    }
+  },
+  {
+    immediate: true,
+  },
+)
+
+watch(
+  () => row.value,
+  () => {
+    if (row.value != null) {
+      setFormValue()
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
   <DashboardLayout>
     <div class="row">
       <div class="flx margin-b x-center">
-        <h2 class="title">Add Ticket</h2>
+        <h2 class="title">{{ row != null ? 'Edit' : 'Add' }} Ticket</h2>
         <div style="margin-left: 20px">
-          <VaButton round><i class="ri-external-link-line"></i></VaButton>
+          <VaButton round @click="routeTo('ticket')"
+            ><i class="ri-external-link-line"></i
+          ></VaButton>
         </div>
       </div>
 
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
-        <Form :initial-values="formValues" @submit="handleSubmit">
+        <Form @submit="handleSubmit">
           <div>
             <div ref="validationErrorRef">
               <ValidationMessages
@@ -103,7 +155,7 @@ onMounted(() => {
 
             <div class="row form-row">
               <div class="flex flex-col md6 sm12">
-                <InputText name="title" label="Title" v-model="formValues.title" />
+                <InputText name="title" label="Title" v-model="form.title" />
               </div>
 
               <div class="flex flex-col md6 sm12">
@@ -112,7 +164,7 @@ onMounted(() => {
                     name="category"
                     label="Category"
                     :options="computedList"
-                    v-model="formValues.categoryId"
+                    v-model="form.categoryId"
                   />
                 </div>
               </div>
@@ -124,7 +176,7 @@ onMounted(() => {
                     tye="email"
                     label="Email"
                     :isRequired="false"
-                    v-model="formValues.issuerEmail"
+                    v-model="form.issuerEmail"
                   />
                 </div>
               </div>
@@ -134,7 +186,7 @@ onMounted(() => {
                     name="phone"
                     label="Phone"
                     :isRequired="false"
-                    v-model="formValues.issuerPhone"
+                    v-model="form.issuerPhone"
                   />
                 </div>
               </div>
@@ -144,19 +196,19 @@ onMounted(() => {
                     name="status"
                     :options="statusOptions"
                     label="Status"
-                    v-model="formValues.status"
+                    v-model="form.status"
                   />
                 </div>
               </div>
 
               <div class="flex flex-col md12 sm12">
                 <div class="form-field">
-                  <InputQuillEditor name="details" label="Details" v-model="formValues.details" />
+                  <InputQuillEditor name="details" label="Details" v-model="form.details" />
                 </div>
               </div>
               <div class="flex flex-col md12 sm12">
                 <div class="form-field">
-                  <InputFile :isRequired="false" label="Files" v-model="formValues.files" />
+                  <InputFile :isRequired="false" label="Files" v-model="form.files" />
                 </div>
               </div>
             </div>

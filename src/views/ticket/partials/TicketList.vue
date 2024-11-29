@@ -1,10 +1,16 @@
 <script setup>
 import { timeAgo } from '@/utils/functions'
+import router from '@/router'
 defineProps({
   rows: {
     default: null,
   },
 })
+
+//component methods
+const routeToEdit = (rowId) => {
+  router.push({ name: 'ticket-edit', params: { id: rowId } })
+}
 </script>
 
 <template>
@@ -42,7 +48,7 @@ defineProps({
 
               <VaDropdownContent>
                 <VaMenuList class="action-list">
-                  <VaMenuItem @selected="alert">
+                  <VaMenuItem @selected="routeToEdit(row.id)">
                     <span><i class="ri-edit-box-line"></i> Edit </span>
                   </VaMenuItem>
                   <VaMenuItem @selected="alert">

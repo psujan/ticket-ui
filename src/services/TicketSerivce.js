@@ -55,11 +55,38 @@ const TicketService = {
         loader.hide()
       })
   },
-  editTicket: async (id, formValues) => {
+  getTicketById: async (id) => {
     const loader = $loading.show()
-    const url = Endpoints.EDIT_CATEGORY.replace('{id}', id)
+    const url = Endpoints.FETCH_A_TICKET.replace('{id}', id)
     return apiClient
-      .put(url, formValues)
+      .get(url)
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  },
+  editTicket: async (id, form) => {
+    const loader = $loading.show()
+    const url = Endpoints.EDIT_TICKET.replace('{id}', id)
+    return apiClient
+      .put(url, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((res) => {
         return {
           isSucc: true,

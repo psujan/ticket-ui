@@ -35,6 +35,11 @@ const router = createRouter({
       name: 'ticket-add',
       component: TicketAdd,
     },
+    {
+      path: '/ticket/edit/:id',
+      name: 'ticket-edit',
+      component: () => TicketAdd,
+    },
     // {
     //   path: '/about',
     //   name: 'about',
@@ -49,7 +54,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
   const { isAuthenticated } = storeToRefs(auth)
-  console.log('router', isAuthenticated)
   if (to.name != 'login' && !isAuthenticated.value) {
     next({ name: 'login' })
   } else {

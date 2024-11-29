@@ -40,7 +40,12 @@ const model = defineModel()
     <label :for="computedId" class="field-label" v-if="showLabel"
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
-    <QuillEditor theme="snow" v-model:content="model" :placeholder="computedPlaceHolder" />
+    <QuillEditor
+      theme="snow"
+      v-model:content="model"
+      :placeholder="computedPlaceHolder"
+      content-type="html"
+    />
     <ErrorMessage :name="name" class="field-error" />
   </div>
 </template>
