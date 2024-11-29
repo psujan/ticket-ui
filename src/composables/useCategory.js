@@ -81,8 +81,9 @@ export default function useCategory() {
       showError.value = true
       errorTitle.value = err.response.data.title
       const failedValidations = err.response.data.errors
-      validationMessages.value.push(failedValidations.Title[0])
-      //validationMessages.value.push(failedValidations.Status[0])
+      for (const [, v] of Object.entries(failedValidations)) {
+        validationMessages.value.push(v[0])
+      }
     }
   }
 

@@ -1,9 +1,11 @@
 import TicketService from '@/services/TicketSerivce'
-import { onMounted, ref } from 'vue'
-//import eventBus, { EVENT, EVENT_STATUS } from '@/utils/mitt'
+import CategoryService from '@/services/CategoryService'
+import { ref } from 'vue'
+import eventBus, { EVENT } from '@/utils/mitt'
 
 export default function useTicket() {
   const rows = ref([])
+  const list = ref([])
 
   const showError = ref(false)
   const errorTitle = ref('Something Went Wrong')
@@ -16,15 +18,35 @@ export default function useTicket() {
     }
   }
 
+  const getList = async (status = 'active') => {
+    const result = await CategoryService.getList(status)
+    if (result.isSucc) {
+      list.value = result.res.data.data
+      console.log(list.value)
+    }
+  }
+
   const resetError = () => {
     showError.value = false
     errorTitle.value = undefined
     validationMessages.value = []
   }
 
-  /*const addRecord = async (formValue) => {
+  const addRecord = async (form) => {
     resetError()
-    const result = await CategoryService.addCategory(formValue)
+    const formData = new FormData()
+    Object.entries(form).forEach(([key, value]) => {
+      if (key != 'files') {
+        formData.append(key, value)
+      }
+    })
+    if (form.files && form.files.length > 0) {
+      form.files.forEach((file) => {
+        // Use the same key 'files' for each file
+        formData.append('files', file)
+      })
+    }
+    const result = await TicketService.addTicket(formData)
     if (result.isSucc) {
       eventBus.emit(EVENT.ADD, { message: result.res.data.message })
       return
@@ -35,7 +57,7 @@ export default function useTicket() {
     }
   }
 
-  const deleteRecord = async (id) => {
+  /*const deleteRecord = async (id) => {
     const result = await CategoryService.deleteCategory(id)
     if (result.isSucc) {
       eventBus.emit(EVENT.DELETE, { message: result.res.data.message, type: EVENT_STATUS.SUCCESS })
@@ -57,7 +79,7 @@ export default function useTicket() {
     if (result.err != null) {
       handleError(result.err)
     }
-  }
+  }*/
 
   const handleError = (err) => {
     console.log(err)
@@ -79,21 +101,22 @@ export default function useTicket() {
       showError.value = true
       errorTitle.value = err.response.data.title
       const failedValidations = err.response.data.errors
-      validationMessages.value.push(failedValidations.Title[0])
-      //validationMessages.value.push(failedValidations.Status[0])
+      for (const [, v] of Object.entries(failedValidations)) {
+        validationMessages.value.push(v[0])
+      }
+      eventBus.emit(EVENT.VALIDATION_ERROR, { message: errorTitle.value })
     }
-  }*/
-
-  onMounted(() => {
-    getRecords()
-  })
+  }
 
   return {
     showError,
     errorTitle,
     validationMessages,
     rows,
+    list,
+    addRecord,
     resetError,
     getRecords,
+    getList,
   }
 }

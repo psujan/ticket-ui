@@ -27,11 +27,16 @@ const TicketService = {
         loader.hide()
       })
   },
-  addTicket: async (formValue) => {
+  addTicket: async (form) => {
     const loader = $loading.show()
-    const url = Endpoints.ADD_CATEGORY
+    const url = Endpoints.ADD_TICKET
+    //const client = apiClient.
     return apiClient
-      .post(url, formValue)
+      .post(url, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
       .then((res) => {
         return {
           isSucc: true,

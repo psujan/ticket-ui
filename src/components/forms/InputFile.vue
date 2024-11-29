@@ -26,9 +26,9 @@ const computedId = computed(() => {
   return props.id || Math.random().toString(36).substring(2, 7)
 })
 
-const computedPlaceHolder = computed(() => {
-  return props.placeholder || `Enter ${props.label}`
-})
+// const computedPlaceHolder = computed(() => {
+//   return props.placeholder || `Enter ${props.label}`
+// })
 
 const model = defineModel()
 </script>
@@ -38,7 +38,7 @@ const model = defineModel()
     <label :for="computedId" class="field-label" v-if="showLabel"
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
-    <VaFileUpload v-model="model" dropzone upload-button-text="Upload File" />
+    <VaFileUpload v-model="model" dropzone upload-button-text="Upload File" :id="computedId" />
     <ErrorMessage :name="name" class="field-error" />
   </div>
 </template>

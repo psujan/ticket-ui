@@ -52,7 +52,6 @@ const resetFormValue = () => {
 }
 
 const handleModalClose = (reload = false) => {
-  console.log('here closing modal')
   showModal.value = false
   row.value = null
   if (reload) {
@@ -81,9 +80,6 @@ const handleEdit = (editRow) => {
 }
 
 //watcher
-watch(rows, (data) => {
-  console.log('rows changed', rows.value)
-})
 </script>
 
 <template>

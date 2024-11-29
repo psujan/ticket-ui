@@ -27,6 +27,29 @@ const CategoryService = {
         loader.hide()
       })
   },
+  getList: async (status = 'active') => {
+    const loader = $loading.show()
+    const url = Endpoints.LIST_CATEGORY + `?status=${status}`
+    return apiClient
+      .get(url)
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  },
   addCategory: async (formValue) => {
     const loader = $loading.show()
     const url = Endpoints.ADD_CATEGORY

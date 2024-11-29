@@ -9,7 +9,7 @@ const handleClick = (routeName) => {
 </script>
 
 <template>
-  <div style="min-height:100vh ; height: 100vh">
+  <div style="min-height: 100vh; align-self: stretch">
     <VaSidebar :minimized="sidebar.isMinimized" :minimizedWidth="0">
       <VaSidebarItem @click="handleClick('dashboard')">
         <VaSidebarItemContent>

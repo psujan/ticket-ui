@@ -3,6 +3,7 @@ import TicketList from './partials/TicketList.vue'
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import useTicket from '@/composables/useTicket'
 import router from '@/router'
+import { onMounted } from 'vue'
 
 //composable function call
 const { rows, getRecords } = useTicket()
@@ -17,6 +18,11 @@ const addTicket = () => {
   router.push({ name: 'ticket-add' })
 }
 //watchers
+
+//lifecycle
+onMounted(() => {
+  getRecords()
+})
 </script>
 
 <template>

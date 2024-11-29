@@ -1,15 +1,19 @@
 <script setup>
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
+import ValidationMessages from '@/components/forms/ValidationMessages.vue'
 import useTicket from '@/composables/useTicket'
-import { reactive } from 'vue'
+import { onMounted, reactive, computed, ref } from 'vue'
 import InputSelect from '@/components/forms/InputSelect.vue'
 import InputText from '@/components/forms/InputText.vue'
 import { Form } from 'vee-validate'
 import InputQuillEditor from '@/components/forms/InputQuillEditor.vue'
 import InputFile from '@/components/forms/InputFile.vue'
+import eventBus, { EVENT } from '@/utils/mitt'
+import toast from '@/utils/toast'
+import router from '@/router'
 
 //composable call
-const { showError, errorTitle, validationMessages } = useTicket()
+const { showError, errorTitle, validationMessages, list, addRecord, getList } = useTicket()
 
 //props
 defineProps({
@@ -17,20 +21,63 @@ defineProps({
     default: null,
   },
 })
-//reactive data
+//reactive & computed data
+const validationErrorRef = ref(null)
+
 const formValues = reactive({
-  title: undefined,
-  status: undefined,
-  issuerEmail: undefined,
-  issuerPhone: undefined,
-  files: null,
-  categoryId: undefined,
-  details: undefined,
+  title: '',
+  status: '',
+  issuerEmail: '',
+  issuerPhone: '',
+  files: [],
+  categoryId: '',
+  details: '',
+})
+
+const statusOptions = [
+  { label: 'Active', value: 'Active' },
+  { label: 'InProgess', value: 'InProgress' },
+  { label: 'Reopened', value: 'Reopened' },
+  { label: 'Resolved', value: 'Resolved' },
+  { label: 'Terminated', value: 'Terminated' },
+]
+
+const computedList = computed(() => {
+  if (list.value.length) {
+    return list.value.map((item) => ({
+      value: item.id,
+      label: item.title,
+    }))
+  }
+
+  return []
 })
 
 //methods
+const handleSubmit = () => {
+  console.log('here submitting', formValues)
+  addRecord(formValues)
+}
 
-//handle event
+const scrollTo = (view) => {
+  view.value?.scrollIntoView({ behavior: 'smooth' })
+}
+
+//manage event
+eventBus.on(EVENT.ADD, (data) => {
+  toast(data.message)
+  router.push({ name: 'ticket' })
+})
+
+eventBus.on(EVENT.VALIDATION_ERROR, () => {
+  console.log('event fired')
+  scrollTo(validationErrorRef)
+})
+
+//lifecycle
+onMounted(() => {
+  getList()
+})
 </script>
 
 <template>
@@ -46,11 +93,13 @@ const formValues = reactive({
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
         <Form :initial-values="formValues" @submit="handleSubmit">
           <div>
-            <ValidationMessages
-              v-if="showError"
-              :messages="validationMessages"
-              :title="errorTitle"
-            />
+            <div ref="validationErrorRef">
+              <ValidationMessages
+                v-if="showError"
+                :messages="validationMessages"
+                :title="errorTitle"
+              />
+            </div>
 
             <div class="row form-row">
               <div class="flex flex-col md6 sm12">
@@ -59,7 +108,12 @@ const formValues = reactive({
 
               <div class="flex flex-col md6 sm12">
                 <div class="form-field">
-                  <InputSelect name="category" label="Category" v-model="formValues.status" />
+                  <InputSelect
+                    name="category"
+                    label="Category"
+                    :options="computedList"
+                    v-model="formValues.categoryId"
+                  />
                 </div>
               </div>
 
@@ -86,7 +140,12 @@ const formValues = reactive({
               </div>
               <div class="flex flex-col md4 sm12">
                 <div class="form-field">
-                  <InputSelect name="status" label="Status" v-model="formValues.status" />
+                  <InputSelect
+                    name="status"
+                    :options="statusOptions"
+                    label="Status"
+                    v-model="formValues.status"
+                  />
                 </div>
               </div>
 
@@ -97,7 +156,7 @@ const formValues = reactive({
               </div>
               <div class="flex flex-col md12 sm12">
                 <div class="form-field">
-                  <InputFile :isRequired="false" label="Files" v-model="formValues.status" />
+                  <InputFile :isRequired="false" label="Files" v-model="formValues.files" />
                 </div>
               </div>
             </div>
