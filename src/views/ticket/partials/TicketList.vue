@@ -1,11 +1,10 @@
 <script setup>
-import { timeAgo } from '@/utils/functions';
+import { timeAgo } from '@/utils/functions'
 defineProps({
   rows: {
     default: null,
   },
 })
-
 </script>
 
 <template>
@@ -25,7 +24,7 @@ defineProps({
           <td>{{ row.id }}</td>
           <td>{{ row.title }}</td>
           <td>
-            <p :class="row.status ? 'is-active' : 'in-inactive'">
+            <p>
               {{ row.status ? 'Active' : 'Inactive' }}
             </p>
           </td>
@@ -34,17 +33,55 @@ defineProps({
             <p>Updated: {{ timeAgo(row.updatedAt) }}</p>
           </td>
           <td>
-            <div class="action-items">
+            <VaDropdown trigger="hover" placement="bottom-left">
+              <template #anchor>
+                <div class="action-items">
+                  <a href="#"><i class="ri-more-2-line"></i></a>
+                </div>
+              </template>
+
+              <VaDropdownContent>
+                <VaMenuList class="action-list">
+                  <VaMenuItem @selected="alert">
+                    <span><i class="ri-edit-box-line"></i> Edit </span>
+                  </VaMenuItem>
+                  <VaMenuItem @selected="alert">
+                    <span><i class="ri-ticket-line"></i>Update Status</span>
+                  </VaMenuItem>
+                  <VaMenuItem @selected="alert">
+                    <span><i class="ri-chat-4-line"></i> Discussion</span>
+                  </VaMenuItem>
+                  <VaDivider></VaDivider>
+                  <VaMenuItem @selected="alert">
+                    <span><i class="ri-delete-bin-line"></i> Delete</span>
+                  </VaMenuItem>
+                </VaMenuList>
+              </VaDropdownContent>
+            </VaDropdown>
+            <!-- <div class="action-items">
               <a href="#" title="Edit Item" @click="$emit('onEdit', row)"
                 ><i class="ri-edit-box-line"></i
               ></a>
               <a href="#" title="Delete Item" @click="$emit('onDelete', row.id)"
                 ><i class="ri-delete-bin-line"></i
               ></a>
-            </div>
+            </div> -->
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </template>
+
+<style scoped>
+.action-list i {
+  margin-right: 8px;
+}
+
+.action-list span {
+  display: block;
+}
+.action-list span:hover {
+  color: #154ec1;
+}
+</style>
