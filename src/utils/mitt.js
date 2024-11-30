@@ -7,7 +7,9 @@ const EVENT = {
   ADD: 'add',
   UPDATE: 'update',
   DELETE: 'delete',
-  VALIDATION_ERROR :'valiation-error'
+  VALIDATION_ERROR: 'valiation-error',
+  TICKET_STAUS_UPDATE: 'ticket-status-update',
+  TICKET_DELETE: 'ticket-delete'
 }
 
 const EVENT_STATUS = {

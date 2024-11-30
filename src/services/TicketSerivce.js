@@ -107,9 +107,32 @@ const TicketService = {
   },
   deleteTicket: async (id) => {
     const loader = $loading.show()
-    const url = Endpoints.DELETE_CATEGORY.replace('{id}', id)
+    const url = Endpoints.DELETE_TICKET.replace('{id}', id)
     return apiClient
       .delete(url)
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  },
+  updateStatus: async (id, status) => {
+    const loader = $loading.show()
+    const url = Endpoints.UPDATE_TICKET_STATUS.replace('{id}', id)
+    return apiClient
+      .post(url, { status: status })
       .then((res) => {
         return {
           isSucc: true,

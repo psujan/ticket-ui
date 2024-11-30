@@ -62,8 +62,6 @@ export default function useCategory() {
   }
 
   const handleError = (err) => {
-    console.log(err)
-
     // handle network error
     if (err?.code == 'ERR_NETWORK') {
       showError.value = true

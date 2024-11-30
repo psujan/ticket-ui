@@ -1,7 +1,7 @@
 import TicketService from '@/services/TicketSerivce'
 import CategoryService from '@/services/CategoryService'
 import { ref } from 'vue'
-import eventBus, { EVENT } from '@/utils/mitt'
+import eventBus, { EVENT, EVENT_STATUS } from '@/utils/mitt'
 
 export default function useTicket() {
   const rows = ref([])
@@ -64,17 +64,19 @@ export default function useTicket() {
     }
   }
 
-  /*const deleteRecord = async (id) => {
-    const result = await CategoryService.deleteCategory(id)
+  const deleteRecord = async (id) => {
+    const result = await TicketService.deleteTicket(id)
     if (result.isSucc) {
-      eventBus.emit(EVENT.DELETE, { message: result.res.data.message, type: EVENT_STATUS.SUCCESS })
+      eventBus.emit(EVENT.TICKET_DELETE, {
+        message: result.res.data.message,
+        type: EVENT_STATUS.SUCCESS,
+      })
     }
 
     if (result.err != null) {
-      console.error(result.err)
       eventBus.emit(EVENT.DELETE, { message: 'Something Went Wrong', type: EVENT_STATUS.ERROR })
     }
-  }*/
+  }
 
   const editRecord = async (id, form) => {
     const formData = new FormData()
@@ -125,6 +127,18 @@ export default function useTicket() {
     }
   }
 
+  const updateStatus = async (id, status) => {
+    const result = await TicketService.updateStatus(id, status)
+    if (result.isSucc) {
+      eventBus.emit(EVENT.TICKET_STAUS_UPDATE, { message: result.res.data.message })
+      return
+    }
+
+    if (result.err != null) {
+      handleError(result.err)
+    }
+  }
+
   return {
     showError,
     errorTitle,
@@ -132,8 +146,10 @@ export default function useTicket() {
     rows,
     row,
     list,
+    updateStatus,
     addRecord,
     editRecord,
+    deleteRecord,
     getTicketById,
     resetError,
     getRecords,

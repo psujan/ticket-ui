@@ -48,7 +48,6 @@ const computedVisiblePages = computed(() => {
 const pageNo = ref(1)
 
 watch(pageNo, (newPageNo) => {
-  console.log('Page Changed', newPageNo)
   emit('onPageChange', newPageNo)
 })
 </script>

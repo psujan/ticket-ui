@@ -7,9 +7,15 @@ defineProps({
   },
 })
 
+const emit = defineEmits(['onUpdateStatus'])
+
 //component methods
-const routeToEdit = (rowId) => {
-  router.push({ name: 'ticket-edit', params: { id: rowId } })
+const routeTo = (routeName , rowId) => {
+  router.push({ name: routeName, params: { id: rowId } })
+}
+
+const updateStatusAction = (row) => {
+  emit('onUpdateStatus', { id: row.id, status: row.status })
 }
 </script>
 
@@ -31,7 +37,7 @@ const routeToEdit = (rowId) => {
           <td>{{ row.title }}</td>
           <td>
             <p>
-              {{ row.status ? 'Active' : 'Inactive' }}
+              {{ row.status }}
             </p>
           </td>
           <td>
@@ -48,30 +54,22 @@ const routeToEdit = (rowId) => {
 
               <VaDropdownContent>
                 <VaMenuList class="action-list">
-                  <VaMenuItem @selected="routeToEdit(row.id)">
+                  <VaMenuItem @click="routeTo('ticket-edit' , row.id)">
                     <span><i class="ri-edit-box-line"></i> Edit </span>
                   </VaMenuItem>
-                  <VaMenuItem @selected="alert">
+                  <VaMenuItem @click="updateStatusAction(row)">
                     <span><i class="ri-ticket-line"></i>Update Status</span>
                   </VaMenuItem>
-                  <VaMenuItem @selected="alert">
+                  <VaMenuItem @click="routeTo('ticket-discussion' , row.id)">
                     <span><i class="ri-chat-4-line"></i> Discussion</span>
                   </VaMenuItem>
                   <VaDivider></VaDivider>
-                  <VaMenuItem @selected="alert">
+                  <VaMenuItem @click="$emit('onDelete', row.id)">
                     <span><i class="ri-delete-bin-line"></i> Delete</span>
                   </VaMenuItem>
                 </VaMenuList>
               </VaDropdownContent>
             </VaDropdown>
-            <!-- <div class="action-items">
-              <a href="#" title="Edit Item" @click="$emit('onEdit', row)"
-                ><i class="ri-edit-box-line"></i
-              ></a>
-              <a href="#" title="Delete Item" @click="$emit('onDelete', row.id)"
-                ><i class="ri-delete-bin-line"></i
-              ></a>
-            </div> -->
           </td>
         </tr>
       </tbody>

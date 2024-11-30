@@ -21,6 +21,7 @@ const formValues = reactive({
   title: undefined,
   status: undefined,
 })
+const currentPage = ref(1)
 
 //manage events
 eventBus.on(EVENT.DELETE, ({ message, type }) => {
@@ -55,7 +56,7 @@ const handleModalClose = (reload = false) => {
   showModal.value = false
   row.value = null
   if (reload) {
-    getRecords()
+    getRecords(currentPage.value)
   }
 }
 
@@ -79,6 +80,10 @@ const handleEdit = (editRow) => {
   openModal(actions.edit)
 }
 
+const handlePageChange = (pNo) => {
+  currentPage.value = pNo
+  getRecords(currentPage.value)
+}
 //watcher
 </script>
 
@@ -93,7 +98,7 @@ const handleEdit = (editRow) => {
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
         <CategoryList :rows="rows" @onEdit="handleEdit" @onDelete="handleDelete" />
-        <AppPagination :rows="rows" @onPageChange="(pageNo) => getRecords(pageNo)" />
+        <AppPagination :rows="rows" @onPageChange="(pageNo) => handlePageChange(pageNo)" />
       </div>
     </div>
     <CategoryModal

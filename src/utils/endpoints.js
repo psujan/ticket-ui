@@ -16,4 +16,5 @@ export default {
   EDIT_TICKET: API_URL + '/ticket/{id}',
   DELETE_TICKET: API_URL + '/ticket/{id}',
   FETCH_A_TICKET: API_URL + '/ticket/{id}',
+  UPDATE_TICKET_STATUS: API_URL + '/ticket/{id}/update-status',
 }

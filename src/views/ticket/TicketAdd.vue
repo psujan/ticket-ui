@@ -12,6 +12,7 @@ import eventBus, { EVENT } from '@/utils/mitt'
 import toast from '@/utils/toast'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { ticketStatusOptions } from '@/utils/data'
 
 //composable call
 const route = useRoute()
@@ -39,14 +40,6 @@ const form = reactive({
   categoryId: '',
   details: '',
 })
-
-const statusOptions = [
-  { label: 'Active', value: 'Active' },
-  { label: 'InProgess', value: 'InProgress' },
-  { label: 'Reopened', value: 'Reopened' },
-  { label: 'Resolved', value: 'Resolved' },
-  { label: 'Terminated', value: 'Terminated' },
-]
 
 const computedList = computed(() => {
   if (list.value.length) {
@@ -194,7 +187,7 @@ watch(
                 <div class="form-field">
                   <InputSelect
                     name="status"
-                    :options="statusOptions"
+                    :options="ticketStatusOptions"
                     label="Status"
                     v-model="form.status"
                   />

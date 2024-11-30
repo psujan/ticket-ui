@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/useAuthStore'
 import { storeToRefs } from 'pinia'
 import TicketView from '@/views/ticket/TicketView.vue'
 import TicketAdd from '@/views/ticket/TicketAdd.vue'
+import TicketDiscussion from '@/views/discussion/TicketDiscussion.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: '/ticket/edit/:id',
       name: 'ticket-edit',
       component: () => TicketAdd,
+    },
+    {
+      path: '/ticket/:id/discussion',
+      name: 'ticket-discussion',
+      component: () => TicketDiscussion,
     },
     // {
     //   path: '/about',

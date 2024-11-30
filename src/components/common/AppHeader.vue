@@ -1,7 +1,9 @@
 <script setup>
 import { useSidebarStore } from '@/stores/useSidebarStore'
 import useAuthService from '@/composables/Auth/useAuthService'
+import { useAuthStore } from '@/stores/useAuthStore'
 const sidebar = useSidebarStore()
+const user = useAuthStore()
 const { logout } = useAuthService()
 </script>
 
@@ -25,7 +27,7 @@ const { logout } = useAuthService()
               <!-- <div class="user-icon bg-primary"><span>J</span></div> -->
               <VaButtonDropdown preset="primary" class="mr-2 mb-2" :stickToEdges="true">
                 <template #label>
-                  <span class="username">Hi John Doe</span>
+                  <span class="username">Hi {{ user.user?.userName }}</span>
                 </template>
                 <VaMenuList>
                   <VaMenuItem class="list-item"><i class="ri-user-line"></i>Profile</VaMenuItem>
