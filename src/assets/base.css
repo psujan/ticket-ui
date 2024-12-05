@@ -22,9 +22,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
+/* .container {
   padding: 0 15px;
-}
+} */
 .flx {
   display: flex;
   flex: 1 1 auto;

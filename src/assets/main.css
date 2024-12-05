@@ -1,3 +1,4 @@
+@import './bootstrap/bootstrap.css';
 @import './base.css';
 :root {
   --primary: #154ec1;

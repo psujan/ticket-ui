@@ -7,6 +7,8 @@ import { storeToRefs } from 'pinia'
 import TicketView from '@/views/ticket/TicketView.vue'
 import TicketAdd from '@/views/ticket/TicketAdd.vue'
 import TicketDiscussion from '@/views/discussion/TicketDiscussion.vue'
+import UserPortalView from '@/views/user-portal/UserPortalView.vue'
+import OpenRequestView from '@/views/user-portal/OpenRequestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +48,16 @@ const router = createRouter({
       name: 'ticket-discussion',
       component: () => TicketDiscussion,
     },
+    {
+      path: '/user-portal',
+      name: 'user-portal',
+      component: () => UserPortalView,
+    },
+    {
+      path: '/open-a-request',
+      name: 'open-request',
+      component: () => OpenRequestView,
+    },
     // {
     //   path: '/about',
     //   name: 'about',
@@ -60,11 +72,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
   const { isAuthenticated } = storeToRefs(auth)
-  if (to.name != 'login' && !isAuthenticated.value) {
+  console.log(to , from , isAuthenticated)
+  next()
+  /*if (to.name != 'login' && !isAuthenticated.value) {
     next({ name: 'login' })
   } else {
     next()
-  }
+  }*/
 })
 
 export default router
