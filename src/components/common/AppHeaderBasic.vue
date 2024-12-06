@@ -14,12 +14,28 @@
             </div>
           </RouterLink>
         </div>
+        <div>
+          <VaDropdown>
+            <template #anchor>
+              <VaButton class="mr-2" preset="secondary">
+                Sujan Poudel <span><i class="ri-arrow-down-s-line"></i></span>
+              </VaButton>
+            </template>
+
+            <VaDropdownContent> Dropped down! </VaDropdownContent>
+          </VaDropdown>
+
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <style scoped>
+.app-logo {
+  margin-left: 0 !important;
+}
+
 header {
   height: 60px;
   background-color: #fff;

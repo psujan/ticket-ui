@@ -20,7 +20,7 @@ import InputText from '@/components/forms/InputText.vue';
         </section>
         <section>
             <div class="container">
-                <div class="row my-5 p-5 bg-white">
+                <div class="row my-5 p-5 bg-white ticket-form-row">
                     <div class="col-sm-12 col-md-12 col-lg-6 mb-4">
                         <InputSelect label="Category" name="category" />
                     </div>
@@ -49,6 +49,10 @@ import InputText from '@/components/forms/InputText.vue';
 </template>
 
 <style scoped>
+.ticket-form-row{
+    border-radius: 8px;
+}
+
 .banner {
     background-color: #154ce1;
     color: #fff;
@@ -68,7 +72,7 @@ import InputText from '@/components/forms/InputText.vue';
 }
 
 .form-btn {
-    min-width: 120px;
+    min-width: 160px;
     padding: 6px;
     margin-left: 12px
 }

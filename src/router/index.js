@@ -9,6 +9,7 @@ import TicketAdd from '@/views/ticket/TicketAdd.vue'
 import TicketDiscussion from '@/views/discussion/TicketDiscussion.vue'
 import UserPortalView from '@/views/user-portal/UserPortalView.vue'
 import OpenRequestView from '@/views/user-portal/OpenRequestView.vue'
+import MyRequestView from '@/views/user-portal/MyRequestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,11 @@ const router = createRouter({
       path: '/open-a-request',
       name: 'open-request',
       component: () => OpenRequestView,
+    },
+    {
+      path: '/my-request',
+      name: 'my-request',
+      component: () => MyRequestView,
     },
     // {
     //   path: '/about',
