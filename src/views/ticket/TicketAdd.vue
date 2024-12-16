@@ -125,8 +125,8 @@ watch(
 
 <template>
   <DashboardLayout>
-    <div class="row">
-      <div class="flx margin-b x-center">
+    <div class="wrap">
+      <div class="d-flex align-items-center mb-4">
         <h2 class="title">{{ row != null ? 'Edit' : 'Add' }} Ticket</h2>
         <div style="margin-left: 20px">
           <VaButton round @click="routeTo('ticket')"
@@ -134,8 +134,7 @@ watch(
           ></VaButton>
         </div>
       </div>
-
-      <div class="flex flex-col md12 sm12 xs12 cd bg-white">
+      <div class="p-3 round-default bg-white">
         <Form @submit="handleSubmit">
           <div>
             <div ref="validationErrorRef">
@@ -145,13 +144,11 @@ watch(
                 :title="errorTitle"
               />
             </div>
-
             <div class="row form-row">
-              <div class="flex flex-col md6 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                 <InputText name="title" label="Title" v-model="form.title" />
               </div>
-
-              <div class="flex flex-col md6 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                 <div class="form-field">
                   <InputSelect
                     name="category"
@@ -161,8 +158,7 @@ watch(
                   />
                 </div>
               </div>
-
-              <div class="flex flex-col md4 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                 <div class="form-field">
                   <InputText
                     name="email"
@@ -173,7 +169,7 @@ watch(
                   />
                 </div>
               </div>
-              <div class="flex flex-col md4 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
                 <div class="form-field">
                   <InputText
                     name="phone"
@@ -183,7 +179,7 @@ watch(
                   />
                 </div>
               </div>
-              <div class="flex flex-col md4 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
                 <div class="form-field">
                   <InputSelect
                     name="status"
@@ -193,13 +189,12 @@ watch(
                   />
                 </div>
               </div>
-
-              <div class="flex flex-col md12 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-12 mb-4">
                 <div class="form-field">
                   <InputQuillEditor name="details" label="Details" v-model="form.details" />
                 </div>
               </div>
-              <div class="flex flex-col md12 sm12">
+              <div class="col-sm-12 col-md-6 col-lg-12 mb-4">
                 <div class="form-field">
                   <InputFile :isRequired="false" label="Files" v-model="form.files" />
                 </div>
@@ -207,13 +202,29 @@ watch(
             </div>
           </div>
           <div class="form-action-button cd" style="margin-top: 20px">
-            <VaButton preset="primary" @click="$emit('onModalClose')" class="cancel-btn">
-              Cancel
-            </VaButton>
-            <VaButton type="submit"> Submit </VaButton>
+            <div class="form-btns">
+              <VaButton preset="primary" @click="$emit('onModalClose')" class="cancel-btn">
+                Cancel
+              </VaButton>
+              <VaButton type="submit"> Submit </VaButton>
+            </div>
           </div>
         </Form>
       </div>
     </div>
   </DashboardLayout>
 </template>
+
+<style scoped>
+.form-action-button {
+  display: grid;
+}
+
+.form-btns {
+  justify-self: end;
+}
+
+.form-btns button {
+  min-width: 180px;
+}
+</style>

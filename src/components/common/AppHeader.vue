@@ -1,20 +1,20 @@
 <script setup>
-import { useSidebarStore } from '@/stores/useSidebarStore'
+// import { useSidebarStore } from '@/stores/useSidebarStore'
 import useAuthService from '@/composables/Auth/useAuthService'
 import { useAuthStore } from '@/stores/useAuthStore'
-const sidebar = useSidebarStore()
+// const sidebar = useSidebarStore()
 const user = useAuthStore()
 const { logout } = useAuthService()
 </script>
 
 <template>
   <header class="flx x-center border-b">
-    <div class="container flx">
+    <div class="container-fluid flx" style="padding: 0 25px">
       <div class="flx x-between x-center">
         <div class="flx x-center">
-          <div class="sidebar-toggle" @click="sidebar.toggleSidebar()">
+          <!-- <div class="sidebar-toggle" @click="sidebar.toggleSidebar()">
             <span><i class="ri ri-menu-line"></i></span>
-          </div>
+          </div> -->
           <RouterLink to="/">
             <div class="app-logo">
               <span class="clr-primary">Helpmate</span>
@@ -75,7 +75,7 @@ header {
 
 .app-logo {
   visibility: visible;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 
 .app-logo span {

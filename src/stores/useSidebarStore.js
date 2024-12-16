@@ -8,8 +8,8 @@ export const useSidebarStore = defineStore('sidebar', {
   // could also be defined as
   // state: () => ({ count: 0 })
   actions: {
-    toggleSidebar() {
-      this.isMinimized = !this.isMinimized
+    toggleSidebar(state) {
+      this.isMinimized = state
     },
   },
 })

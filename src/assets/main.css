@@ -11,6 +11,16 @@
   background-color: #fff !important;
 }
 
+.v-sidebar-menu.vsm_white-theme .vsm--link_level-1 .vsm--icon {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+}
+
+.v-sidebar-menu.vsm_white-theme .vsm--link_level-1.vsm--link_active .vsm--icon {
+  background-color: #154ec1;
+  color: #fff;
+}
+
 .form-title {
   padding-left: 12px;
   margin-bottom: 16px;

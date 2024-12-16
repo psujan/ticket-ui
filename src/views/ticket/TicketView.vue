@@ -72,7 +72,7 @@ onMounted(() => {
 
 <template>
   <DashboardLayout>
-    <div class="row">
+    <div class="wrap">
       <div class="flx margin-b x-center">
         <h2 class="title">Tickets</h2>
         <div style="margin-left: 20px">
