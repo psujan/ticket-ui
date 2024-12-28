@@ -46,6 +46,10 @@ body {
   background-color: #fff;
 }
 
+.bg-gray-light {
+  background-color: #f5f5f5;
+}
+
 .round-default {
   border-radius: 12px;
 }

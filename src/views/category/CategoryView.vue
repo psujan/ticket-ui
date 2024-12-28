@@ -93,7 +93,9 @@ const handlePageChange = (pNo) => {
       <div class="flx margin-b x-center">
         <h2 class="title">Categories</h2>
         <div style="margin-left: 20px">
-          <VaButton round @click="openModal(actions.add)"><i class="ri-add-line"></i></VaButton>
+          <VaPopover placement="bottom" message="Add Category">
+            <VaButton round @click="openModal(actions.add)"><i class="ri-add-line"></i></VaButton>
+          </VaPopover>
         </div>
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">

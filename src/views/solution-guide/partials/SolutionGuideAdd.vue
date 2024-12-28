@@ -1,32 +1,22 @@
 <script setup>
 import DashboardLayout from '@/components/layout/DashboardLayout.vue'
 import ValidationMessages from '@/components/forms/ValidationMessages.vue'
-import useTicket from '@/composables/useTicket'
-import { onMounted, reactive, computed, ref, watch } from 'vue'
+import useSolutionGuide from '@/composables/useSolutionGuide'
+import { reactive, ref, watch } from 'vue'
 import InputSelect from '@/components/forms/InputSelect.vue'
 import InputText from '@/components/forms/InputText.vue'
 import { Form } from 'vee-validate'
 import InputQuillEditor from '@/components/forms/InputQuillEditor.vue'
 import InputFile from '@/components/forms/InputFile.vue'
-import eventBus, { EVENT } from '@/utils/mitt'
+import eventBus, { EVENT_SOLUTIONGUIDE as EVENT } from '@/utils/mitt'
 import toast from '@/utils/toast'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import { ticketStatusOptions } from '@/utils/data'
 
 //composable call
 const route = useRoute()
-const {
-  showError,
-  errorTitle,
-  validationMessages,
-  list,
-  row,
-  addRecord,
-  editRecord,
-  getList,
-  getTicketById,
-} = useTicket()
+const { showError, errorTitle, validationMessages, row, create, update, getById } =
+  useSolutionGuide()
 
 //reactive & computed data
 const validationErrorRef = ref(null)
@@ -34,22 +24,8 @@ const validationErrorRef = ref(null)
 const form = reactive({
   title: '',
   status: '',
-  issuerEmail: '',
-  issuerPhone: '',
   files: [],
-  categoryId: '',
   details: '',
-})
-
-const computedList = computed(() => {
-  if (list.value.length) {
-    return list.value.map((item) => ({
-      value: item.id,
-      label: item.title,
-    }))
-  }
-
-  return []
 })
 
 //methods
@@ -58,36 +34,44 @@ const routeTo = (routeName) => {
 }
 const handleSubmit = () => {
   if (row.value != null) {
-    editRecord(row.value.id, form)
+    update(row.value.id, form)
   } else {
-    addRecord(form)
+    create(form)
   }
 }
+
+const statusOptions = [
+  { label: 'Active', value: 'active' },
+  { label: 'Inactive', value: 'inactive' },
+]
 
 const scrollTo = (view) => {
   view.value?.scrollIntoView({ behavior: 'smooth' })
 }
 
 const setFormValue = () => {
-  console.log(row.value)
   form.title = row.value.title
-  form.categoryId = row.value.categoryId
   form.status = row.value.status
   form.details = row.value.details
-  form.issuerPhone = row.value.issuerPhone
-  form.issuerEmail = row.value.issuerEmail == null ? '' : row.value.issuerEmail
+  form.files = []
+}
+
+const resetFormValue = () => {
+  form.title = ''
+  form.status = ''
+  form.details = ''
   form.files = []
 }
 
 //manage event
 eventBus.on(EVENT.ADD, (data) => {
   toast(data.message)
-  router.push({ name: 'ticket' })
+  router.push({ name: 'solution-guide' })
 })
 
 eventBus.on(EVENT.UPDATE, (data) => {
   toast(data.message)
-  router.push({ name: 'ticket' })
+  router.push({ name: 'solution-guide' })
 })
 
 eventBus.on(EVENT.VALIDATION_ERROR, () => {
@@ -95,16 +79,13 @@ eventBus.on(EVENT.VALIDATION_ERROR, () => {
 })
 
 //lifecycle
-onMounted(() => {
-  getList()
-})
 
 //watcher
 watch(
   () => route,
   (to) => {
     if (to.params.id) {
-      getTicketById(to.params.id)
+      getById(to.params.id)
     }
   },
   {
@@ -127,11 +108,13 @@ watch(
   <DashboardLayout>
     <div class="wrap">
       <div class="d-flex align-items-center mb-4">
-        <h2 class="title">{{ row != null ? 'Edit' : 'Add' }} Ticket</h2>
+        <h2 class="title">{{ row != null ? 'Edit' : 'Add' }} Solution Guide</h2>
         <div style="margin-left: 20px">
-          <VaButton round @click="routeTo('ticket')"
-            ><i class="ri-external-link-line"></i
-          ></VaButton>
+          <VaPopover placement="bottom" message="Solution Guide List">
+            <VaButton round @click="routeTo('solution-guide')"
+              ><i class="ri-external-link-line"></i
+            ></VaButton>
+          </VaPopover>
         </div>
       </div>
       <div class="p-3 round-default bg-white">
@@ -145,45 +128,14 @@ watch(
               />
             </div>
             <div class="row form-row">
-              <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+              <div class="col-sm-12 col-md-6 col-lg-8 mb-4">
                 <InputText name="title" label="Title" v-model="form.title" />
               </div>
               <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
                 <div class="form-field">
                   <InputSelect
-                    name="category"
-                    label="Category"
-                    :options="computedList"
-                    v-model="form.categoryId"
-                  />
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
-                <div class="form-field">
-                  <InputText
-                    name="email"
-                    tye="email"
-                    label="Email"
-                    :isRequired="false"
-                    v-model="form.issuerEmail"
-                  />
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
-                <div class="form-field">
-                  <InputText
-                    name="phone"
-                    label="Phone"
-                    :isRequired="false"
-                    v-model="form.issuerPhone"
-                  />
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-6 col-lg-6 mb-4">
-                <div class="form-field">
-                  <InputSelect
                     name="status"
-                    :options="ticketStatusOptions"
+                    :options="statusOptions"
                     label="Status"
                     v-model="form.status"
                   />
@@ -221,7 +173,7 @@ watch(
           </div>
           <div class="form-action-button cd" style="margin-top: 20px">
             <div class="form-btns">
-              <VaButton preset="primary" @click="$emit('onModalClose')" class="cancel-btn">
+              <VaButton preset="primary" @click="resetFormValue" class="cancel-btn">
                 Cancel
               </VaButton>
               <VaButton type="submit"> Submit </VaButton>

@@ -17,4 +17,11 @@ export default {
   DELETE_TICKET: API_URL + '/ticket/{id}',
   FETCH_A_TICKET: API_URL + '/ticket/{id}',
   UPDATE_TICKET_STATUS: API_URL + '/ticket/{id}/update-status',
+
+  //Solution Guide Routes
+  FETCH_SLN_GUIDE: API_URL + '/solutionguide/paginated',
+  ADD_SLN_GUIDE: API_URL + '/solutionguide',
+  EDIT_SLN_GUIDE: API_URL + '/solutionguide/{id}',
+  DELETE_SLN_GUIDE: API_URL + '/solutionguide/{id}',
+  FETCH_A_SLN_GUIDE: API_URL + '/solutionguide/{id}',
 }

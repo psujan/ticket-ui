@@ -9,7 +9,14 @@ const EVENT = {
   DELETE: 'delete',
   VALIDATION_ERROR: 'valiation-error',
   TICKET_STAUS_UPDATE: 'ticket-status-update',
-  TICKET_DELETE: 'ticket-delete'
+  TICKET_DELETE: 'ticket-delete',
+}
+
+const EVENT_SOLUTIONGUIDE = {
+  ADD: 'add',
+  UPDATE: 'update',
+  DELETE: 'delete',
+  VALIDATION_ERROR: 'validation-error',
 }
 
 const EVENT_STATUS = {
@@ -19,4 +26,4 @@ const EVENT_STATUS = {
 
 export default eventBus
 
-export { EVENT, EVENT_STATUS }
+export { EVENT, EVENT_STATUS, EVENT_SOLUTIONGUIDE }

@@ -10,6 +10,8 @@ import TicketDiscussion from '@/views/discussion/TicketDiscussion.vue'
 import UserPortalView from '@/views/user-portal/UserPortalView.vue'
 import OpenRequestView from '@/views/user-portal/OpenRequestView.vue'
 import MyRequestView from '@/views/user-portal/MyRequestView.vue'
+import SolutionGuide from '@/views/solution-guide/SolutionGuide.vue'
+import SolutionGuideAdd from '@/views/solution-guide/partials/SolutionGuideAdd.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +52,16 @@ const router = createRouter({
       component: () => TicketDiscussion,
     },
     {
+      path: '/solution-guide',
+      name: 'solution-guide',
+      component: () => SolutionGuide,
+    },
+    {
+      path: '/solution-guide/new',
+      name: 'solution-guide-new',
+      component: () => SolutionGuideAdd,
+    },
+    {
       path: '/user-portal',
       name: 'user-portal',
       component: () => UserPortalView,
@@ -78,7 +90,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
   const { isAuthenticated } = storeToRefs(auth)
-  console.log(to , from , isAuthenticated)
+  console.log(to, from, isAuthenticated)
   next()
   /*if (to.name != 'login' && !isAuthenticated.value) {
     next({ name: 'login' })

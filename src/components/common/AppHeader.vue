@@ -8,7 +8,7 @@ const { logout } = useAuthService()
 </script>
 
 <template>
-  <header class="flx x-center border-b">
+  <header class="header flx x-center border-b">
     <div class="container-fluid flx" style="padding: 0 25px">
       <div class="flx x-between x-center">
         <div class="flx x-center">
@@ -49,7 +49,8 @@ const { logout } = useAuthService()
 header {
   height: 60px;
   background-color: #fff;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 999;
 }
 

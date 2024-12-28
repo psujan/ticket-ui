@@ -76,7 +76,9 @@ onMounted(() => {
       <div class="flx margin-b x-center">
         <h2 class="title">Tickets</h2>
         <div style="margin-left: 20px">
-          <VaButton round @click="addTicket"><i class="ri-add-line"></i></VaButton>
+          <VaPopover placement="bottom" message="Add Ticket">
+            <VaButton round @click="addTicket"><i class="ri-add-line"></i></VaButton>
+          </VaPopover>
         </div>
       </div>
       <div class="flex flex-col md12 sm12 xs12 cd bg-white">
