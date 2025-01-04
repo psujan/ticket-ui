@@ -74,7 +74,16 @@ watch(
           </div>
           <Form @submit="handleSubmit">
             <div class="chat-footer">
-              <input type="text" placeholder="Type a message..." v-model="comment" />
+              <input type="text" placeholder="Add a comment ..." v-model="comment" />
+              <button type="submit">Send</button>
+            </div>
+          </Form>
+        </div>
+        <div v-else>
+          <p class="field-error px-2">There has been no discussion on this ticket</p>
+          <Form @submit="handleSubmit">
+            <div class="chat-footer">
+              <input type="text" placeholder="Add a comment ..." v-model="comment" />
               <button type="submit">Send</button>
             </div>
           </Form>
