@@ -57,7 +57,7 @@ const SolutionGuideService = {
   },
   getById: async (id) => {
     const loader = $loading.show()
-    const url = Endpoints.FETCH_A_TICKET.replace('{id}', id)
+    const url = Endpoints.FETCH_A_SLN_GUIDE.replace('{id}', id)
     return apiClient
       .get(url)
       .then((res) => {
@@ -80,7 +80,7 @@ const SolutionGuideService = {
   },
   update: async (id, form) => {
     const loader = $loading.show()
-    const url = Endpoints.EDIT_TICKET.replace('{id}', id)
+    const url = Endpoints.EDIT_SLN_GUIDE.replace('{id}', id)
     return apiClient
       .put(url, form, {
         headers: {

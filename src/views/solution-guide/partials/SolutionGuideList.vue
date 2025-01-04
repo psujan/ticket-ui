@@ -7,13 +7,10 @@ defineProps({
   },
 })
 
-
 //component methods
 const routeTo = (routeName, rowId) => {
   router.push({ name: routeName, params: { id: rowId } })
 }
-
-
 </script>
 
 <template>
@@ -33,8 +30,8 @@ const routeTo = (routeName, rowId) => {
           <td>{{ row.id }}</td>
           <td>{{ row.title }}</td>
           <td>
-            <p>
-              {{ row.status }}
+            <p :class="row.status == 'active' ? 'is-active' : 'is-inactive'">
+              {{ row.status && String(row.status[0]).toUpperCase() + String(row.status).slice(1) }}
             </p>
           </td>
           <td>
@@ -51,7 +48,7 @@ const routeTo = (routeName, rowId) => {
 
               <VaDropdownContent>
                 <VaMenuList class="action-list">
-                  <VaMenuItem @click="routeTo('ticket-edit', row.id)">
+                  <VaMenuItem @click="routeTo('solutionguide-edit', row.id)">
                     <span><i class="ri-edit-box-line"></i> Edit </span>
                   </VaMenuItem>
                   <VaDivider></VaDivider>

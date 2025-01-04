@@ -62,6 +62,11 @@ const router = createRouter({
       component: () => SolutionGuideAdd,
     },
     {
+      path: '/solution-guide/edit/:id',
+      name: 'solutionguide-edit',
+      component: () => SolutionGuideAdd,
+    },
+    {
       path: '/user-portal',
       name: 'user-portal',
       component: () => UserPortalView,

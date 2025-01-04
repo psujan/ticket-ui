@@ -87,6 +87,7 @@ export default function useSolutionGuide() {
         formData.append('files', file)
       })
     }
+    formData.append('username', auth.user.email)
     const result = await SolutionGuideService.update(id, formData)
     if (result.isSucc) {
       eventBus.emit(EVENT.UPDATE, { message: result.res.data.message })

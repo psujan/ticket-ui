@@ -205,7 +205,7 @@ watch(
                     :key="i"
                     class="mb-2 upload-list bg-gray-light d-flex justify-content-between px-2 py-2"
                   >
-                    <span class="clr-primary">{{ f.name }}</span>
+                    <span class="clr-primary">{{ f.originalName }}</span>
                     <div>
                       <a href="#"
                         ><span class="error px-1"><i class="ri-delete-bin-line"></i></span
