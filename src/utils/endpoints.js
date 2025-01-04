@@ -24,4 +24,8 @@ export default {
   EDIT_SLN_GUIDE: API_URL + '/solutionguide/{id}',
   DELETE_SLN_GUIDE: API_URL + '/solutionguide/{id}',
   FETCH_A_SLN_GUIDE: API_URL + '/solutionguide/{id}',
+
+  //Ticket Discussion Routes
+  GET_ALL_COMMENTS: API_URL + '/ticketdiscussion/{id}',
+  ADD_COMMENT: API_URL + '/ticketdiscussion',
 }

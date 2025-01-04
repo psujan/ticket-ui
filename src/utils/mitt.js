@@ -19,6 +19,10 @@ const EVENT_SOLUTIONGUIDE = {
   VALIDATION_ERROR: 'validation-error',
 }
 
+const EVENT_COMMENT = {
+  ADD: 'add',
+}
+
 const EVENT_STATUS = {
   SUCCESS: 'success',
   ERROR: 'error',
@@ -26,4 +30,4 @@ const EVENT_STATUS = {
 
 export default eventBus
 
-export { EVENT, EVENT_STATUS, EVENT_SOLUTIONGUIDE }
+export { EVENT, EVENT_STATUS, EVENT_SOLUTIONGUIDE, EVENT_COMMENT }
