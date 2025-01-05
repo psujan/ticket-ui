@@ -17,7 +17,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/dashboard',
       name: 'dashboard',
       component: DashboardView,
     },
@@ -67,7 +67,7 @@ const router = createRouter({
       component: () => SolutionGuideAdd,
     },
     {
-      path: '/user-portal',
+      path: '/',
       name: 'user-portal',
       component: () => UserPortalView,
     },
@@ -94,14 +94,32 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
-  const { isAuthenticated } = storeToRefs(auth)
-  console.log(to, from, isAuthenticated)
+  const { roles } = storeToRefs(auth)
+  // if (to.name != 'login' && !isAuthenticated.value) {
+  //   next({ name: 'user-portal' })
+  //   return
+  // }
+
+  console.log('here route', roles.value)
+  if (to.name == 'dashboard' && !isAdmin(roles.value)) {
+    next({ name: 'user-portal' })
+    return
+  }
+
+  if (to.name == 'user-portal' && isAdmin(roles.value)) {
+    next({ name: 'dashboard' })
+    return
+  }
+
   next()
-  /*if (to.name != 'login' && !isAuthenticated.value) {
-    next({ name: 'login' })
-  } else {
-    next()
-  }*/
 })
+
+const isAdmin = (roles) => {
+  if (roles && roles.length && roles.includes('SuperAdmin')) {
+    return true
+  }
+
+  return false
+}
 
 export default router

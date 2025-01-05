@@ -6,7 +6,7 @@ export const useAuthStore = defineStore('auth', {
     return {
       isAuthenticated: false,
       user: null,
-      role: undefined,
+      roles: undefined,
       token: undefined,
       tokenAddedAt: undefined,
     }
@@ -27,7 +27,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     setRoles(roles) {
-      this.role = roles
+      this.roles = roles
     },
 
     setTokenAddedAt(date) {
@@ -37,7 +37,7 @@ export const useAuthStore = defineStore('auth', {
     clearAuthCredentials() {
       this.user = null
       this.token = undefined
-      this.role = undefined
+      this.roles = undefined
       this.tokenValidUpto = undefined
       this.isAuthenticated = false
     },

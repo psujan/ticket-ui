@@ -27,7 +27,7 @@ const { logout } = useAuthService()
               <!-- <div class="user-icon bg-primary"><span>J</span></div> -->
               <VaButtonDropdown preset="primary" class="mr-2 mb-2" :stickToEdges="true">
                 <template #label>
-                  <span class="username">Hi {{ user.user?.userName }}</span>
+                  <span class="username">Hi {{ user.user?.fullName }}</span>
                 </template>
                 <VaMenuList>
                   <VaMenuItem class="list-item"><i class="ri-user-line"></i>Profile</VaMenuItem>

@@ -39,8 +39,11 @@ export default function useAuthService() {
       authStore.setRoles(roles)
       authStore.setTokenAddedAt(Date())
       setAuthToken()
-      router.push({ name: 'dashboard' })
-      console.log('here finallly')
+      if (roles && roles.length && roles.includes['SuperAdmin']) {
+        router.push({ name: 'dashboard' })
+      } else {
+        router.push({ name: 'user-portal' })
+      }
     }
 
     // handle error response
