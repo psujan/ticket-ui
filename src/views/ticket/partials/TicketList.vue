@@ -26,6 +26,7 @@ const updateStatusAction = (row) => {
         <tr>
           <th>Id</th>
           <th>Title</th>
+          <th>Category</th>
           <th>Status</th>
           <th>Timestamp</th>
           <th>Action</th>
@@ -35,6 +36,7 @@ const updateStatusAction = (row) => {
         <tr v-for="(row, i) in rows.data" :key="i">
           <td>{{ row.id }}</td>
           <td>{{ row.title }}</td>
+          <td>{{ row.category.title }}</td>
           <td>
             <p>
               {{ row.status }}

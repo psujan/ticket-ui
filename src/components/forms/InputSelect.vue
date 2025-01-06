@@ -38,7 +38,7 @@ const model = defineModel()
       >{{ label }} <span class="field-req" v-if="isRequired">*</span></label
     >
     <Field :name="name" :id="computedId" class="field-input" v-model="model" as="select">
-      <option :value="null">--Please Select--</option>
+      <!-- <option :value="null">--Please Select--</option> -->
       <option :value="option.value" v-for="(option, i) in options" :key="i">
         {{ option.label }}
       </option>

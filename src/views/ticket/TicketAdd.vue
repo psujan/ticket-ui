@@ -71,7 +71,7 @@ const scrollTo = (view) => {
 const setFormValue = () => {
   console.log(row.value)
   form.title = row.value.title
-  form.categoryId = row.value.categoryId
+  form.categoryId = row.value.category.id
   form.status = row.value.status
   form.details = row.value.details
   form.issuerPhone = row.value.issuerPhone

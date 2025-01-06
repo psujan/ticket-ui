@@ -151,6 +151,34 @@ const TicketService = {
         loader.hide()
       })
   },
+  addTicketByUser: async (form) =>{
+    const loader = $loading.show()
+    const url = Endpoints.ADD_TICKET_USER
+    //const client = apiClient.
+    return apiClient
+      .post(url, form, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        return {
+          isSucc: true,
+          res: res,
+          err: null,
+        }
+      })
+      .catch((err) => {
+        return {
+          isSucc: false,
+          res: null,
+          err: err,
+        }
+      })
+      .finally(() => {
+        loader.hide()
+      })
+  }
 }
 
 export default TicketService

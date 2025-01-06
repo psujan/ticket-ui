@@ -13,6 +13,7 @@ export default {
   //Ticket Routes
   FETCH_TICKET: API_URL + '/ticket/paginated',
   ADD_TICKET: API_URL + '/ticket',
+  ADD_TICKET_USER : API_URL + '/frontend/ticket',
   EDIT_TICKET: API_URL + '/ticket/{id}',
   DELETE_TICKET: API_URL + '/ticket/{id}',
   FETCH_A_TICKET: API_URL + '/ticket/{id}',

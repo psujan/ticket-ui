@@ -2,6 +2,7 @@ import TicketService from '@/services/TicketSerivce'
 import CategoryService from '@/services/CategoryService'
 import { ref } from 'vue'
 import eventBus, { EVENT, EVENT_STATUS } from '@/utils/mitt'
+import * as yup from 'yup' 
 
 export default function useTicket() {
   const rows = ref([])
@@ -11,6 +12,15 @@ export default function useTicket() {
   const showError = ref(false)
   const errorTitle = ref('Something Went Wrong')
   const validationMessages = ref([])
+
+  const schema = yup.object({
+      issuerEmail: yup.string().required('Email is required').email('Please provide valid email'),
+      //name: yup.string().required(),
+      issuerPhone: yup.string().required('Phone Number is required'),
+      category: yup.number().required("Please Select Category"),
+      //details: yup.string().required("Details is required"),
+      title: yup.string().required("Title is required")
+    })
 
   const getRecords = async (pageNo = 1) => {
     const result = await TicketService.getPaginated(pageNo)
@@ -139,6 +149,31 @@ export default function useTicket() {
     }
   }
 
+  const addTicketByUser = async (form) => {
+    resetError()
+    const formData = new FormData()
+    Object.entries(form).forEach(([key, value]) => {
+      if (key != 'files') {
+        formData.append(key, value)
+      }
+    })
+    if (form.files && form.files.length > 0) {
+      form.files.forEach((file) => {
+        // Use the same key 'files' for each file
+        formData.append('files', file)
+      })
+    }
+    const result = await TicketService.addTicketByUser(formData)
+    if (result.isSucc) {
+      eventBus.emit(EVENT.ADD, { message: result.res.data.message })
+      return
+    }
+
+    if (result.err != null) {
+      handleError(result.err)
+    }
+  }
+
   return {
     showError,
     errorTitle,
@@ -151,8 +186,10 @@ export default function useTicket() {
     editRecord,
     deleteRecord,
     getTicketById,
+    addTicketByUser,
     resetError,
     getRecords,
     getList,
+    schema
   }
 }

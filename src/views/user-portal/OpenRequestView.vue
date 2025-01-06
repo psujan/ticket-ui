@@ -4,6 +4,7 @@ import InputFile from '@/components/forms/InputFile.vue';
 import InputQuillEditor from '@/components/forms/InputQuillEditor.vue';
 import InputSelect from '@/components/forms/InputSelect.vue';
 import InputText from '@/components/forms/InputText.vue';
+import TicketForm from './partials/TicketForm.vue';
 </script>
 
 <template>
@@ -20,29 +21,7 @@ import InputText from '@/components/forms/InputText.vue';
         </section>
         <section>
             <div class="container">
-                <div class="row my-5 p-5 bg-white ticket-form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-6 mb-4">
-                        <InputSelect label="Category" name="category" />
-                    </div>
-                    <div class="col-sm-12 col-md-12 col-lg-6 mb-4">
-                        <InputText label="Subject" name="title" />
-                    </div>
-                    <div class="col-sm-12 mb-4">
-                        <InputQuillEditor name="details" label="Details" />
-                    </div>
-                    <div class="col-sm-12 mb-4">
-                        <InputFile name="files" label="Files" :is-required="false" />
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="form-action-button " style="margin-top: 20px">
-                            <VaButton class="form-btn" preset="primary">
-                                Cancel
-                            </VaButton>
-                            <VaButton type="submit" class="form-btn"> Submit </VaButton>
-                        </div>
-                    </div>
-                </div>
-
+              <TicketForm />  
             </div>
         </section>
     </FrontPageLayout>
