@@ -47,6 +47,6 @@ const model = defineModel()
       content-type="html"
     />
     <ErrorMessage :name="name" class="field-error" />
-    <input type="hidden" :name="name" v-model="model" />
+    <!-- <input type="hidden" :name="name" v-model="model" /> -->
   </div>
 </template>

@@ -31,7 +31,6 @@ const handleSubmit = () => {
     if (user) {
         form.userId = user.Id
     }
-    console.log('submitting')
     addTicketByUser(form);
 }
 
@@ -50,7 +49,7 @@ const form = reactive({
     details: '',
 })
 
-const { showError,schema, errorTitle, validationMessages, list, getList, addTicketByUser } = useTicket();
+const { showError, errorTitle, validationMessages, list, getList, addTicketByUser } = useTicket();
 
 const computedList = computed(() => {
     if (list.value.length) {
@@ -69,7 +68,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <Form @submit="handleSubmit" :validation-schema="schema">
+    <Form @submit="handleSubmit">
         <div class="row my-5 p-5 bg-white ticket-form-row">
             <div class="col-sm-12">
                 <div ref="validationErrorRef">

@@ -9,7 +9,7 @@
 <style scoped>
 .footer{
     padding:16px;
-    background-color: #8dabff;;
+    background-color: #a6beff;;
 }
 .footer p{
     text-align: center;

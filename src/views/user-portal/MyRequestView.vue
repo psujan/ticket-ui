@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import FrontPageLayout from '@/components/common/FrontPageLayout.vue';
-import InputFile from '@/components/forms/InputFile.vue';
-import InputQuillEditor from '@/components/forms/InputQuillEditor.vue';
-import InputSelect from '@/components/forms/InputSelect.vue';
-import InputText from '@/components/forms/InputText.vue';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { onMounted } from 'vue';
+
+const { isAuthenticated ,user } = useAuthStore();
+
+onMounted(()=>{
+  if(isAuthenticated){
+    console.log('calling api here', user.email)
+  }
+})
 </script>
 
 <template>
   <FrontPageLayout>
-    <!-- <section class="banner">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12 col-lg-6 welcome-text">
-            <h2>Open A Support Request</h2>
-            <p>We will try to reach out to you soon</p>
-          </div>
-        </div>
-      </div>
-    </section> -->
     <section>
-      <div class="container">
+      <div class="container" style="height: 100vh">
         <div class="row my-2  ticket-list-row">
           <div class="col-lg-8 bg-white col-sm-12" style="border-radius: 8px;">
             <h2 class="title my-4">My Support Requests</h2>
-            <ul class="ticket-list" style="min-height: 500px;">
+            <ul class="ticket-list" style="min-height: 500px;" v-if="isAuthenticated">
               <li class="bg-white py-2 px-4 mb-3 ">
                 <div class="flx x-between x-center">
                   <div>
@@ -87,6 +83,13 @@ import InputText from '@/components/forms/InputText.vue';
                 </div>
               </li>
             </ul>
+            <div class="text-center" style="min-height: 200px;">
+              <p class="clr-gray">Please login to view your submitted request</p>
+              <div style="width: 100%; text-align: center; margin:20px 0">
+                <a class="go-back" href="/">Back</a>
+                <a class="support-req-btn" href="/login">Login</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -163,5 +166,29 @@ import InputText from '@/components/forms/InputText.vue';
   color: #eeeded;
   font-size: 14px;
   max-width: 70%;
+}
+
+.support-req-btn {
+  padding: 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  margin: 10px;
+  justify-content: center;
+  min-width: 150px;
+  text-align: center;
+  background-color: #154ce1;
+  color:#fff !important
+}
+
+.go-back{
+  padding: 8px;
+  border-radius: 6px;
+  display: inline-flex;
+  margin: 10px;
+  justify-content: center;
+  min-width: 150px;
+  text-align: center;
+  background: #f8f8f8 !important;
+  color:#000 !important;
 }
 </style>

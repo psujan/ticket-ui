@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import FrontPageLayout from '@/components/common/FrontPageLayout.vue';
-import InputFile from '@/components/forms/InputFile.vue';
-import InputQuillEditor from '@/components/forms/InputQuillEditor.vue';
-import InputSelect from '@/components/forms/InputSelect.vue';
-import InputText from '@/components/forms/InputText.vue';
+
 import TicketForm from './partials/TicketForm.vue';
 </script>
 
@@ -50,11 +47,7 @@ import TicketForm from './partials/TicketForm.vue';
     font-size: 14px;
 }
 
-.form-btn {
-    min-width: 160px;
-    padding: 6px;
-    margin-left: 12px
-}
+
 
 .welcome-text h2 {
     font-size: 24px;
