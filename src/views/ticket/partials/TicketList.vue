@@ -10,7 +10,7 @@ defineProps({
 const emit = defineEmits(['onUpdateStatus'])
 
 //component methods
-const routeTo = (routeName , rowId) => {
+const routeTo = (routeName, rowId) => {
   router.push({ name: routeName, params: { id: rowId } })
 }
 
@@ -25,7 +25,7 @@ const updateStatusAction = (row) => {
       <thead>
         <tr>
           <th>Id</th>
-          <th>Title</th>
+          <th>Ticket</th>
           <th>Category</th>
           <th>Status</th>
           <th>Timestamp</th>
@@ -35,7 +35,21 @@ const updateStatusAction = (row) => {
       <tbody>
         <tr v-for="(row, i) in rows.data" :key="i">
           <td>{{ row.id }}</td>
-          <td>{{ row.title }}</td>
+          <td style="max-width: 30%;">
+            <div>
+              <p>{{ row.title }}</p>
+              <p v-if="row.user"
+                style="border-radius:6px; color:#49a8e0; margin: 8px 0; background-color:#f7fcff; padding: 10px 5px;">
+                User
+                : {{ row?.user?.email
+                }}</p>
+              <p v-if="row.issuerEmail"
+                style="border-radius:6px; color:#1dbd32; margin: 8px 0; background-color:#f5ffef; padding: 10px 5px;">
+                Visitor : {{
+                  row?.issuerEmail
+                }}</p>
+            </div>
+          </td>
           <td>{{ row.category.title }}</td>
           <td>
             <p>
@@ -56,13 +70,13 @@ const updateStatusAction = (row) => {
 
               <VaDropdownContent>
                 <VaMenuList class="action-list">
-                  <VaMenuItem @click="routeTo('ticket-edit' , row.id)">
+                  <VaMenuItem @click="routeTo('ticket-edit', row.id)">
                     <span><i class="ri-edit-box-line"></i> Edit </span>
                   </VaMenuItem>
                   <VaMenuItem @click="updateStatusAction(row)">
                     <span><i class="ri-ticket-line"></i>Update Status</span>
                   </VaMenuItem>
-                  <VaMenuItem @click="routeTo('ticket-discussion' , row.id)">
+                  <VaMenuItem @click="routeTo('ticket-discussion', row.id)">
                     <span><i class="ri-chat-4-line"></i> Discussion</span>
                   </VaMenuItem>
                   <VaDivider></VaDivider>
@@ -87,6 +101,7 @@ const updateStatusAction = (row) => {
 .action-list span {
   display: block;
 }
+
 .action-list span:hover {
   color: #154ec1;
 }

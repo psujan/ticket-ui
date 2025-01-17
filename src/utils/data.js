@@ -11,7 +11,7 @@ const actions = {
 }
 
 const ticketStatusOptions = [
-  { label: 'Active', value: 'Active' },
+  { label: 'New', value: 'New' },
   { label: 'InProgess', value: 'InProgress' },
   { label: 'Reopened', value: 'Reopened' },
   { label: 'Resolved', value: 'Resolved' },

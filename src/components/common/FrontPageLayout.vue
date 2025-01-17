@@ -5,6 +5,6 @@ import AppHeaderBasic from './AppHeaderBasic.vue';
 
 <template>
     <AppHeaderBasic></AppHeaderBasic>
-    <slot></slot>
+    <slot class="main-slot"></slot>
     <AppFooter></AppFooter>
 </template>
