@@ -12,6 +12,7 @@ import OpenRequestView from '@/views/user-portal/OpenRequestView.vue'
 import MyRequestView from '@/views/user-portal/MyRequestView.vue'
 import SolutionGuide from '@/views/solution-guide/SolutionGuide.vue'
 import SolutionGuideAdd from '@/views/solution-guide/partials/SolutionGuideAdd.vue'
+import TicketComment from '@/views/user-portal/TicketComment.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +82,11 @@ const router = createRouter({
       name: 'my-request',
       component: () => MyRequestView,
     },
+    {
+      path:'/comments/:id',
+      name:'ticket-comment',
+      component:() => TicketComment
+    }
     // {
     //   path: '/about',
     //   name: 'about',

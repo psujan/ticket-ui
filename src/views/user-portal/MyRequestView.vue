@@ -4,8 +4,7 @@ import UserService from '@/services/UserService';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { onMounted, ref } from 'vue';
 import { timeAgo } from '@/utils/functions';
-
-
+import router from '@/router';
 const { isAuthenticated } = useAuthStore();
 const rows = ref(null);
 
@@ -34,7 +33,7 @@ onMounted(() => {
               <template v-if="rows && rows?.data.length">
                 <li class="bg-white py-2 px-4 mb-3" v-for="(row, i) in rows.data" :key="i">
                   <div class="d-flex justify-content-between">
-                    <span>{{ row.title }}</span>
+                    <span>{{ '#' + row.id + " " + row.title }}</span>
                     <span style="font-size: 12px; color: #000;">{{ `-${timeAgo(row.createdAt)}`
                       }}</span>
                   </div>
@@ -56,7 +55,7 @@ onMounted(() => {
 
                           <VaDropdownContent>
                             <VaMenuList class="action-list">
-                              <VaMenuItem>
+                              <VaMenuItem @click="router.replace('/comments/'+row.id)">
                                 <span><i class="ri-chat-4-line"></i> Discussion</span>
                               </VaMenuItem>
                             </VaMenuList>
@@ -67,37 +66,6 @@ onMounted(() => {
                   </div>
                 </li>
               </template>
-              <!-- <li class="bg-white py-2 px-4 mb-3 ">
-                <div class="flx x-between x-center">
-                  <div>
-                    <a href="">Payment of $200 Held</a>
-                    <div class="py-1">
-                      <span class="ticket-status mr-3">Resolved</span>
-                      <span class="ticket-category">Refund and Payment</span>
-                    </div>
-
-                  </div>
-                  <div>
-                    <div class="ml-2" style="display: inline;">
-                      <VaDropdown>
-                        <template #anchor>
-                          <VaButton class="" preset="secondary">
-                            <span><i class="ri-more-2-line"></i></span>
-                          </VaButton>
-                        </template>
-
-                        <VaDropdownContent>
-                          <VaMenuList class="action-list">
-                            <VaMenuItem>
-                              <span><i class="ri-chat-4-line"></i> Discussion</span>
-                            </VaMenuItem>
-                          </VaMenuList>
-                        </VaDropdownContent>
-                      </VaDropdown>
-                    </div>
-                  </div>
-                </div>
-              </li> -->
             </ul>
             <div class="text-center" style="min-height: 200px;" v-else>
               <p class="clr-gray">Please login to view your submitted request</p>
@@ -114,6 +82,19 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.btn-back {
+  color: #154ce1;
+  font-size: 13px;
+  padding: 8px;
+  background-color: #fcfcfc;
+  transition: 0.35s ease;
+  border-radius: 6px;
+}
+
+.btn-back:hover {
+  background-color: #f4f4f4;
+}
+
 .title {
   font-size: 18px !important;
   margin-bottom: 10px;
