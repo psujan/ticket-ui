@@ -55,7 +55,7 @@ onMounted(() => {
 
                           <VaDropdownContent>
                             <VaMenuList class="action-list">
-                              <VaMenuItem @click="router.replace('/comments/'+row.id)">
+                              <VaMenuItem @click="router.replace('/comments/' + row.id)">
                                 <span><i class="ri-chat-4-line"></i> Discussion</span>
                               </VaMenuItem>
                             </VaMenuList>

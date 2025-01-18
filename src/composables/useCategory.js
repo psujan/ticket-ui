@@ -12,13 +12,11 @@ export default function useCategory() {
   const getRecords = async (pageNo = 1) => {
     const result = await CategoryService.getPaginated(pageNo)
     if (result.isSucc) {
-      console.log(result)
       rows.value = result.res.data.data
     }
   }
 
   const resetError = () => {
-    console.log('calling reset')
     showError.value = false
     errorTitle.value = undefined
     validationMessages.value = []

@@ -64,13 +64,6 @@ watch(
             <div class="message" :class="[user?.id == row.userId ? 'sent' : 'received']">
               {{ row.comment }}
             </div>
-            <!-- <div class="message sent">Hi! I need some assistance with my account.</div> -->
-            <!-- <div class="message received">Sure! Can you please provide more details?</div> -->
-            <!-- <div class="message received">{{ row.comment }}</div>
-            <div class="message sent">Hi! I need some assistance with my account.</div>
-            <div class="message received">Sure! Can you please provide more details?</div>
-            <div class="message received">Hello! How can I help you today?</div>
-            <div class="message sent">Hi! I need some assistance with my account.</div> -->
           </div>
           <Form @submit="handleSubmit">
             <div class="chat-footer">
